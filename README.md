@@ -23,6 +23,24 @@ Statische website in HTML, CSS en een beetje JavaScript, met één PHP-script vo
 3. Controleer dat de host PHP 8.1 of nieuwer gebruikt (met `curl` en `fileinfo`).
 4. Stuur een testaanvraag. Die komt in de admin-app als echte aanvraag; verwijder ze daarna.
 
+## Testsite op Railway (test.creafluxe.be)
+
+De `Dockerfile` draait de site met PHP 8.3 en Apache. Productie blijft op EasyHost.
+
+1. In Railway: *New → GitHub Repo → creafluxe-website*. Railway vindt de Dockerfile zelf. Elke push naar `main` zet een nieuwe versie online.
+2. Variabelen van de service (*Variables*):
+
+   | Variabele | Waarde |
+   | --- | --- |
+   | `NOINDEX` | `1` (houdt zoekmachines weg) |
+   | `INTAKE_KEY` | leeg laten, anders komen testaanvragen in de echte admin-database |
+   | `ALLOWED_ORIGINS` | `https://test.creafluxe.be` (standaardwaarde, enkel nodig als het domein anders is) |
+
+3. *Settings → Networking → Custom Domain*: `test.creafluxe.be`. Railway toont een CNAME-doel.
+4. In Cloudflare, DNS: record `CNAME`, naam `test`, doel = wat Railway toonde.
+
+Op Railway is er geen mailserver, dus het formulier geeft daar een foutmelding na versturen. De rest van de site werkt gewoon. Zonder `private/config.php` leest `php/aanvraag.php` zijn instellingen uit deze variabelen (ook `INTAKE_URL`, `NOTIFY_TO`, `MAIL_FROM`).
+
 ## Lokaal bekijken
 
 ```powershell

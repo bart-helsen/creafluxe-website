@@ -14,7 +14,16 @@
 
 declare(strict_types=1);
 
-$config = require __DIR__ . '/../private/config.php';
+// Settings come from private/config.php (EasyHost) or, when that file is
+// absent, from environment variables (Railway test site).
+$configFile = __DIR__ . '/../private/config.php';
+$config = is_file($configFile) ? require $configFile : [
+    'intake_url' => getenv('INTAKE_URL') ?: 'https://admin.creafluxe.be/api/orders/intake',
+    'intake_key' => getenv('INTAKE_KEY') ?: '',
+    'notify_to' => getenv('NOTIFY_TO') ?: 'offerte@creafluxe.be',
+    'mail_from' => getenv('MAIL_FROM') ?: 'noreply@creafluxe.be',
+    'allowed_origins' => array_filter(array_map('trim', explode(',', getenv('ALLOWED_ORIGINS') ?: 'https://test.creafluxe.be'))),
+];
 
 const MAX_FILES = 5;
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
