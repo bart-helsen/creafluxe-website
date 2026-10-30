@@ -4,7 +4,9 @@ FROM php:8.3-apache
 
 # .htaccess files must work (private/.htaccess blocks the config folder),
 # and mod_headers is needed for the noindex header.
-RUN a2enmod headers rewrite \
+# mod_php only works with the prefork MPM; Apache refuses to start with two MPMs.
+RUN a2dismod -f mpm_event mpm_worker || true \
+ && a2enmod mpm_prefork headers rewrite \
  && sed -ri 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 COPY docker/noindex.conf /etc/apache2/conf-available/noindex.conf
