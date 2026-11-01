@@ -346,3 +346,84 @@ p { margin: 0; }
 .page h1 { font-size: clamp(36px, 5vw, 56px); margin-bottom: var(--space-4); }
 .page h2 { font-size: 24px; line-height: 32px; font-weight: 400; margin-top: var(--space-8); }
 .page ul { margin: 0; padding-left: 1.2em; display: grid; gap: var(--space-2); }
+
+/* ---------- Configurator (herinneringsdoos.html) ----------
+   Same form parts as the request form, but on a light ground. */
+.config-section { padding-top: var(--space-12); }
+.config-title { font-size: clamp(40px, 6vw, 64px); }
+.config { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; }
+.config-preview { position: sticky; top: 100px; display: grid; gap: var(--space-3); }
+.preview-tabs { display: flex; border-bottom: 1px solid var(--rule); }
+.preview-tabs button {
+  font: 600 12px/16px var(--font-sans); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-muted); background: none; border: 0; border-bottom: 2px solid transparent;
+  padding: var(--space-3) var(--space-4); margin-bottom: -1px; cursor: pointer;
+}
+.preview-tabs button[aria-selected="true"] { color: var(--creafluxe-gray); border-bottom-color: var(--creafluxe-orange); }
+.preview-svg { width: 100%; height: auto; aspect-ratio: 4 / 3; background: var(--surface-alt); display: block; }
+.preview-svg .wood { fill: #ecd7b4; stroke: #a9875f; stroke-width: 1; }
+.preview-svg .wood-dark { fill: #dcc29a; stroke: #a9875f; stroke-width: 1; }
+.preview-svg .engrave { fill: none; stroke: #6b4a2b; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.preview-svg .engrave-fill { fill: #6b4a2b; }
+.preview-svg .window { fill: #f6f3ee; stroke: #a9875f; stroke-width: 1; }
+.preview-svg .photo-hint { fill: #b9a68d; font: 500 11px var(--font-sans); }
+.preview-svg .dim { fill: var(--ink-muted); font: 500 11px var(--font-sans); }
+.preview-svg .dim-line { stroke: #b5aca3; stroke-width: .8; }
+.preview-svg .name { fill: #6b4a2b; font-family: "Edwardian Script ITC", "Snell Roundhand", "Segoe Script", "Brush Script MT", cursive; }
+.preview-svg .date { fill: #6b4a2b; font-family: Garamond, Georgia, serif; letter-spacing: .08em; }
+
+.config-steps { display: grid; gap: var(--space-8); }
+.config-step { border: 0; border-top: 1px solid var(--creafluxe-gray); margin: 0; padding: var(--space-6) 0 0; display: grid; gap: var(--space-4); min-width: 0; }
+.config-step legend { float: left; width: 100%; padding: 0; margin-bottom: var(--space-2); font-size: 22px; line-height: 30px; font-weight: 500; }
+.config-step legend .step-label { display: inline-block; min-width: 1.4em; font-size: inherit; line-height: inherit; letter-spacing: 0; font-weight: 300; }
+.config [hidden] { display: none !important; }
+.config .field label, .config .field-label { font-size: 14px; font-weight: 600; }
+.config .optional { color: var(--ink-muted); }
+.config .field input[type="text"], .config .field input[type="email"], .config .field input[type="tel"],
+.config .field input[type="number"], .config .field select, .config .field textarea {
+  width: 100%; font: 400 16px/24px var(--font-sans); color: var(--creafluxe-gray);
+  background: #fff; border: 1px solid #bdb5ad; border-radius: 0; padding: 11px 13px;
+}
+.config .field textarea { min-height: 96px; resize: vertical; }
+.config .field input[type="file"] { color: var(--creafluxe-gray); }
+.config .field input[type="file"]::file-selector-button { color: var(--creafluxe-gray); border-color: var(--creafluxe-gray); }
+.config .field.check label { color: var(--creafluxe-gray); }
+.config .field.has-error input, .config .field.has-error textarea { border-color: #c0392b; outline: 2px solid #c0392b; }
+.config .field-error, .config .form-status.is-error { color: #b0301f; }
+.config .form-status.is-success { color: var(--creafluxe-gray); }
+.field-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.field-row-3 .hint { grid-column: 1 / -1; }
+.hint { font-size: 13px; line-height: 20px; color: var(--ink-muted); }
+.hint.is-warning { color: #b0301f; }
+
+.choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.choice { position: relative; cursor: pointer; }
+.choice input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.choice span { display: grid; gap: 2px; height: 100%; padding: var(--space-3) var(--space-4); border: 1px solid #bdb5ad; background: #fff; transition: border-color .15s, box-shadow .15s; }
+.choice strong { font-weight: 600; }
+.choice small { font-size: 13px; line-height: 19px; color: var(--ink-muted); }
+.choice input:checked + span { border-color: var(--creafluxe-orange); box-shadow: inset 0 0 0 1px var(--creafluxe-orange); }
+.choice input:focus-visible + span { outline: 2px solid var(--creafluxe-orange); outline-offset: 2px; }
+.choice input:disabled + span { opacity: .45; cursor: not-allowed; }
+
+.segmented { display: flex; flex-wrap: wrap; border: 1px solid #bdb5ad; width: fit-content; max-width: 100%; background: #fff; }
+.segmented label { position: relative; cursor: pointer; }
+.segmented label + label { border-left: 1px solid #bdb5ad; }
+.segmented input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.segmented span { display: block; padding: 9px 16px; font-size: 14px; font-weight: 500; }
+.segmented input:checked + span { background: var(--creafluxe-gray); color: #fff; }
+.segmented input:focus-visible + span { outline: 2px solid var(--creafluxe-orange); outline-offset: -2px; }
+.segmented input:disabled + span { opacity: .4; cursor: not-allowed; }
+
+@media (max-width: 900px) {
+  .config { grid-template-columns: 1fr; gap: var(--space-8); }
+  .config-preview { position: static; }
+}
+@media (max-width: 520px) {
+  .choice-grid, .field-row, .field-row-3 { grid-template-columns: 1fr; }
+}
+
+/* Teaser on the homepage */
+.configurator-teaser { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-6); align-items: center; border-top: 2px solid var(--creafluxe-orange); background: var(--surface); padding: var(--space-8); margin-top: var(--space-12); }
+.configurator-teaser p { color: var(--ink-muted); margin-top: var(--space-2); }
+@media (max-width: 640px) { .configurator-teaser { grid-template-columns: 1fr; padding: var(--space-6); } }

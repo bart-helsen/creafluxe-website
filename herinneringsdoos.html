@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="nl-BE">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Herinneringsdoos samenstellen · Creafluxe</title>
+  <meta name="description" content="Stel je eigen houten herinneringsdoos samen: formaat, deksel, vakken en een gravure met naam en datum. Creafluxe snijdt en graveert ze op maat.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css?v=2">
+  <meta property="og:title" content="Herinneringsdoos samenstellen · Creafluxe">
+  <meta property="og:description" content="Kies formaat, deksel, vakken en gravure. Gesneden en gegraveerd op maat.">
+  <meta property="og:type" content="website">
+  <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/configurator-memory-box.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./" aria-label="Creafluxe, naar de startpagina">
+        <img src="assets/img/logo.svg" alt="Creafluxe" width="212" height="94">
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Hoofdmenu">
+        <a href="./#werkwijze">Werkwijze</a>
+        <a href="./#realisaties">Realisaties</a>
+        <a href="./#technieken">Technieken</a>
+        <a href="./#over">Over mij</a>
+        <a class="btn btn-small" href="./#aanvraag">Start met je idee</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section config-section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Zelf samenstellen</p>
+          <h1 class="config-title">Herinneringsdoos</h1>
+          <p class="section-intro">Een houten doos met vingerverbindingen voor foto's, kaartjes en kleine schatten. Kies het formaat, het deksel en de vakken, en wat er op het deksel gegraveerd wordt. Je krijgt binnen twee werkdagen een prijs; pas als je akkoord gaat, maak ik ze.</p>
+        </div>
+
+        <noscript><p class="hint is-warning">De samensteller werkt met JavaScript. Staat dat uit? Beschrijf je doos dan via het <a href="./#aanvraag">aanvraagformulier</a>.</p></noscript>
+
+        <form class="config" id="config-form" action="php/aanvraag.php" method="post" enctype="multipart/form-data" novalidate>
+          <input type="hidden" name="product" value="memory-box">
+          <input type="hidden" name="configuration" id="c-configuration" value="">
+
+          <!-- Live preview -->
+          <div class="config-preview">
+            <div class="preview-tabs" role="tablist" aria-label="Voorbeeld">
+              <button type="button" role="tab" id="tab-lid" aria-selected="true" aria-controls="preview-svg">Deksel</button>
+              <button type="button" role="tab" id="tab-inside" aria-selected="false" aria-controls="preview-svg">Binnenkant</button>
+            </div>
+            <svg id="preview-svg" class="preview-svg" role="img" aria-labelledby="preview-desc" xmlns="http://www.w3.org/2000/svg"></svg>
+            <p class="caption" id="preview-desc"></p>
+            <p class="caption">Schematisch voorbeeld. Lettertype en versiering kunnen licht afwijken van de echte gravure.</p>
+          </div>
+
+          <div class="config-steps">
+            <!-- 1. Formaat -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">1</span> Formaat</legend>
+              <div class="choice-grid" id="size-presets">
+                <label class="choice"><input type="radio" name="size" value="180x120x70"><span><strong>Klein</strong><small>180 × 120 × 70 mm</small></span></label>
+                <label class="choice"><input type="radio" name="size" value="220x160x100" checked><span><strong>Standaard</strong><small>220 × 160 × 100 mm · foto's 10 × 15 liggen plat</small></span></label>
+                <label class="choice"><input type="radio" name="size" value="300x220x120"><span><strong>Groot</strong><small>300 × 220 × 120 mm</small></span></label>
+                <label class="choice"><input type="radio" name="size" value="custom"><span><strong>Eigen maat</strong><small>binnenmaat in mm</small></span></label>
+              </div>
+              <div class="field-row field-row-3" id="custom-size" hidden>
+                <div class="field">
+                  <label for="c-w">Breedte</label>
+                  <input id="c-w" type="number" inputmode="numeric" min="120" max="340" step="1" value="220">
+                </div>
+                <div class="field">
+                  <label for="c-d">Diepte</label>
+                  <input id="c-d" type="number" inputmode="numeric" min="100" max="250" step="1" value="160">
+                </div>
+                <div class="field">
+                  <label for="c-h">Hoogte</label>
+                  <input id="c-h" type="number" inputmode="numeric" min="50" max="150" step="1" value="100">
+                </div>
+                <p class="hint">Binnenmaat. Breedte 120–340, diepte 100–250, hoogte 50–150 mm.</p>
+              </div>
+            </fieldset>
+
+            <!-- 2. Deksel -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">2</span> Deksel</legend>
+              <div class="choice-grid">
+                <label class="choice"><input type="radio" name="lid" value="lift" checked><span><strong>Opliggend</strong><small>Ligt erop en til je eraf. Kan een fotovenster hebben.</small></span></label>
+                <label class="choice"><input type="radio" name="lid" value="slide"><span><strong>Schuifdeksel</strong><small>Schuift naar voren uit de doos.</small></span></label>
+                <label class="choice"><input type="radio" name="lid" value="hinge"><span><strong>Scharnier</strong><small>Draait open op een staafje achteraan.</small></span></label>
+              </div>
+              <div class="field">
+                <span class="field-label" id="feet-label">Onderkant</span>
+                <div class="segmented" role="radiogroup" aria-labelledby="feet-label">
+                  <label><input type="radio" name="feet" value="arch" checked><span>Pootjes</span></label>
+                  <label><input type="radio" name="feet" value="flat"><span>Vlak</span></label>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- 3. Vakken -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">3</span> Vakken</legend>
+              <div class="field-row">
+                <div class="field">
+                  <label for="c-div-x">Naast elkaar (links-rechts)</label>
+                  <select id="c-div-x">
+                    <option value="1" selected>1 vak</option><option value="2">2 vakken</option><option value="3">3 vakken</option><option value="4">4 vakken</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="c-div-y">Achter elkaar (voor-achter)</label>
+                  <select id="c-div-y">
+                    <option value="1" selected>1 vak</option><option value="2">2 vakken</option><option value="3">3 vakken</option><option value="4">4 vakken</option>
+                  </select>
+                </div>
+              </div>
+              <p class="hint" id="div-hint"></p>
+            </fieldset>
+
+            <!-- 4. Gravure -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">4</span> Op het deksel</legend>
+              <div class="field">
+                <span class="field-label" id="motif-label">Wat komt er in het midden?</span>
+                <div class="segmented" role="radiogroup" aria-labelledby="motif-label">
+                  <label><input type="radio" name="motif" value="ornament" checked><span>Versiering</span></label>
+                  <label><input type="radio" name="motif" value="artwork"><span>Eigen tekening</span></label>
+                  <label id="motif-photo-wrap"><input type="radio" name="motif" value="photo"><span>Fotovenster</span></label>
+                </div>
+              </div>
+
+              <div class="field" id="ornament-field">
+                <label for="c-ornament">Versiering boven de naam</label>
+                <select id="c-ornament">
+                  <option value="heart" selected>Hart</option><option value="hearts">Twee hartjes</option><option value="star">Ster</option><option value="none">Geen</option>
+                </select>
+              </div>
+
+              <div class="field" id="artwork-field" hidden>
+                <label for="c-artwork">Je tekening, logo of foto <span class="optional">(SVG, PDF, PNG of JPG, max. 10 MB)</span></label>
+                <input id="c-artwork" name="files[]" type="file" accept=".svg,.pdf,.png,.jpg,.jpeg,image/svg+xml,application/pdf,image/png,image/jpeg">
+                <p class="hint">Een lijntekening of logo met duidelijke contrasten werkt het best. Ik bekijk je bestand en laat het weten als er iets aangepast moet worden.</p>
+              </div>
+
+              <div class="field" id="photo-field" hidden>
+                <label for="c-photo">Formaat van de foto</label>
+                <select id="c-photo">
+                  <option value="120x80">9 × 13 cm (zichtbaar 120 × 80 mm)</option>
+                  <option value="140x90" selected>10 × 15 cm (zichtbaar 140 × 90 mm)</option>
+                  <option value="170x120">13 × 18 cm (zichtbaar 170 × 120 mm)</option>
+                </select>
+                <p class="hint">Je foto ligt onder het deksel, zichtbaar door een venster. Enkel bij het opliggende deksel.</p>
+              </div>
+
+              <div class="field">
+                <label for="c-border">Rand</label>
+                <select id="c-border">
+                  <option value="vine" selected>Rank</option><option value="hearts">Hartjes</option><option value="stars">Sterren</option><option value="dots">Stippen</option><option value="scallop">Golfrand</option><option value="double">Dubbele lijn</option><option value="none">Geen rand</option>
+                </select>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="c-name">Naam of tekst <span class="optional">(optioneel)</span></label>
+                  <input id="c-name" type="text" maxlength="40" value="" placeholder="bv. Emma">
+                </div>
+                <div class="field">
+                  <label for="c-date">Datum <span class="optional">(optioneel)</span></label>
+                  <input id="c-date" type="text" maxlength="30" value="" placeholder="bv. 12 · 05 · 2024">
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- 5. Gegevens -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">5</span> Je gegevens</legend>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-name">Naam</label>
+                  <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
+                </div>
+                <div class="field">
+                  <label for="f-email">E-mail</label>
+                  <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200">
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-phone">Telefoon <span class="optional">(optioneel)</span></label>
+                  <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+                </div>
+                <div class="field">
+                  <label for="f-quantity">Aantal</label>
+                  <input id="f-quantity" type="number" inputmode="numeric" min="1" max="50" step="1" value="1">
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-brief">Opmerkingen <span class="optional">(optioneel)</span></label>
+                <textarea id="f-brief" name="brief" rows="3" maxlength="4000" placeholder="Houtsoort, voor wanneer je ze nodig hebt, iets wat je nog wil vragen…"></textarea>
+              </div>
+
+              <div class="hp" aria-hidden="true">
+                <label for="f-website">Laat dit veld leeg</label>
+                <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <input type="hidden" name="started" id="f-started" value="">
+
+              <div class="field check">
+                <input id="f-privacy" name="privacy" type="checkbox" value="1" required>
+                <label for="f-privacy">Ik ga akkoord dat Creafluxe mijn gegevens gebruikt om deze aanvraag te beantwoorden. Lees de <a href="privacy.html">privacyverklaring</a>.</label>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn" type="submit">Vraag een prijs aan</button>
+                <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+              </div>
+              <p class="hint">Dit is nog geen bestelling. Je krijgt eerst een voorstel met prijs.</p>
+            </fieldset>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <img src="assets/img/logo-wit.svg" alt="Creafluxe" width="180" height="80" loading="lazy">
+      <div class="footer-cols">
+        <div>
+          <p class="footer-label">Contact</p>
+          <p><a href="mailto:offerte@creafluxe.be">offerte@creafluxe.be</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Pagina's</p>
+          <p><a href="./#werkwijze">Werkwijze</a><br><a href="./#realisaties">Realisaties</a><br><a href="privacy.html">Privacy</a></p>
+        </div>
+      </div>
+      <p class="footer-small">© <span id="year">2026</span> Creafluxe · Bring your design to life</p>
+    </div>
+  </footer>
+</body>
+</html>

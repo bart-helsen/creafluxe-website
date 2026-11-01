@@ -14,6 +14,9 @@ Statische website in HTML, CSS en een beetje JavaScript, met één PHP-script vo
 | `assets/img/` | Logo's (uit `design/Logo Files`, enkel bijgesneden), favicon, foto van het Revell-project |
 | `assets/fonts/` | Manrope, lokaal gehost (geen Google Fonts, dus geen cookiebanner nodig) |
 | `php/aanvraag.php` | Verwerkt het formulier: naar de admin-app, e-mail naar jou, bevestiging naar de klant |
+| `herinneringsdoos.html` | Samensteller voor de herinneringsdoos: keuzes met live voorbeeld, verstuurt via `php/aanvraag.php` |
+| `assets/js/configurator-memory-box.js` | Logica en voorbeeld van de samensteller; maakt de configuratie (JSON) |
+| `php/memory-box.php` | Controleert die configuratie en zet ze in woorden voor de e-mails |
 | `private/config.example.php` | Voorbeeld van de instellingen; kopieer naar `private/config.php` |
 
 ## Online zetten
