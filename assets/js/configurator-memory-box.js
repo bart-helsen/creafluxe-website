@@ -22,8 +22,9 @@
   var $ = function (id) { return document.getElementById(id); };
   var radio = function (name) { var r = form.querySelector('input[name="' + name + '"]:checked'); return r ? r.value : null; };
   var svg = $("preview-svg");
-  var view = "lid";
-  var artworkUrl = null;
+  var view = "3d";          // falls back to "lid" when 3D is not available
+  var viewer = null;        // the 3D view (assets/js/memory-box-3d.js), once loaded
+  var artworkUrl = null;    // the customer's picture as a data URL (also used in the 3D lid)
 
   // ---------------------------------------------------------------- state
 
@@ -294,6 +295,7 @@
       dt.textContent = o.date;
       fitText(dt, maxW);
     }
+    return { x: x, y: y, w: LW * k, h: LD * k };   // the lid (slide: the box top), in viewBox px
   }
 
   function drawInside(c) {
@@ -329,9 +331,15 @@
   function render() {
     syncControls();
     var c = readConfig();
-    while (svg.firstChild) svg.removeChild(svg.firstChild);
-    svg.setAttribute("viewBox", "0 0 400 300");
-    if (view === "lid") drawLid(c); else drawInside(c);
+    $("preview-3d").hidden = view !== "3d";
+    svg.toggleAttribute("hidden", view === "3d");   // an <svg> has no .hidden property
+    if (view === "3d") {
+      if (viewer) { viewer.update(c.options); scheduleLidTexture(c); }
+    } else {
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      svg.setAttribute("viewBox", "0 0 400 300");
+      if (view === "lid") drawLid(c); else drawInside(c);
+    }
 
     var o = c.options, extra = o.lid === "slide" ? 6 : 14;
     var parts = o.dividers.length + 1 === 1 && o.dividersY.length + 1 === 1 ? "1 vak" : (o.dividers.length + 1) * (o.dividersY.length + 1) + " vakken";
@@ -350,20 +358,134 @@
       render();
     });
   });
+  // The picture is shrunk to a data URL: small enough to redraw quickly, and usable
+  // inside the lid drawing that becomes the 3D texture (blob: links are not).
   $("c-artwork").addEventListener("change", function () {
-    if (artworkUrl) URL.revokeObjectURL(artworkUrl);
     var f = this.files[0];
-    artworkUrl = f && /^image\/(png|jpeg|svg\+xml)$/.test(f.type) ? URL.createObjectURL(f) : null;
+    artworkUrl = null;
     render();
-  });
-  [["tab-lid", "lid"], ["tab-inside", "inside"]].forEach(function (pair) {
-    $(pair[0]).addEventListener("click", function () {
-      view = pair[1];
-      $("tab-lid").setAttribute("aria-selected", String(view === "lid"));
-      $("tab-inside").setAttribute("aria-selected", String(view === "inside"));
+    if (!f || !/^image\/(png|jpeg|svg\+xml)$/.test(f.type)) return;
+    var url = URL.createObjectURL(f);
+    var img = new Image();
+    img.onload = function () {
+      var s = Math.min(1, 1200 / Math.max(img.naturalWidth || 1200, img.naturalHeight || 1200));
+      var cv = document.createElement("canvas");
+      cv.width = Math.max(1, Math.round((img.naturalWidth || 1200) * s));
+      cv.height = Math.max(1, Math.round((img.naturalHeight || 1200) * s));
+      cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+      URL.revokeObjectURL(url);
+      artworkUrl = cv.toDataURL("image/png");
       render();
-    });
+    };
+    img.onerror = function () { URL.revokeObjectURL(url); };
+    img.src = url;
   });
+
+  var TABS = [["tab-3d", "3d"], ["tab-lid", "lid"], ["tab-inside", "inside"]];
+  function showView(v) {
+    view = v;
+    TABS.forEach(function (t) { $(t[0]).setAttribute("aria-selected", String(t[1] === view)); });
+    if (viewer) { if (view === "3d") viewer.start(); else viewer.stop(); }
+    render();
+  }
+  TABS.forEach(function (pair) {
+    $(pair[0]).addEventListener("click", function () { showView(pair[1]); });
+  });
+
+  // ------------------------------------------------------------ 3D view
+
+  // The lid engraving in 3D is the 2D lid drawing, drawn off-screen and put on the lid as a texture.
+  var offSvg = null, textureTimer = null, textureToken = 0;
+  function scheduleLidTexture(c) {
+    clearTimeout(textureTimer);
+    textureTimer = setTimeout(function () { buildLidTexture(c); }, 120);
+  }
+
+  function buildLidTexture(c) {
+    if (!offSvg) {
+      offSvg = document.createElementNS(NS, "svg");
+      offSvg.setAttribute("class", "preview-svg");
+      offSvg.setAttribute("aria-hidden", "true");
+      offSvg.style.cssText = "position:fixed;left:-10000px;top:0;width:400px;height:300px;visibility:hidden";
+      document.body.appendChild(offSvg);
+    }
+    var main = svg;
+    svg = offSvg;
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.setAttribute("viewBox", "0 0 400 300");
+    var rect;
+    try { rect = drawLid(c); } finally { svg = main; }
+
+    // Copy the styles from the stylesheet onto the elements: an SVG drawn as an image has no CSS.
+    // The wood itself is left out; the 3D view puts its own grain under the engraving.
+    var clone = offSvg.cloneNode(true);
+    var src = offSvg.querySelectorAll("*"), dst = clone.querySelectorAll("*");
+    for (var i = 0; i < src.length; i++) {
+      var cs = getComputedStyle(src[i]);
+      var wood = /\bwood/.test(src[i].getAttribute("class") || "");
+      dst[i].setAttribute("style", (wood ? "fill:none;stroke:none;" :
+        "fill:" + cs.fill + ";stroke:" + cs.stroke + ";stroke-width:" + cs.strokeWidth + ";font-family:" + cs.fontFamily +
+        ";letter-spacing:" + cs.letterSpacing + ";") + (src[i].getAttribute("style") || ""));
+    }
+    var W = 1024, H = Math.round((W * rect.h) / rect.w);
+    clone.setAttribute("xmlns", NS);
+    clone.setAttribute("viewBox", [rect.x, rect.y, rect.w, rect.h].join(" "));
+    clone.setAttribute("width", W);
+    clone.setAttribute("height", H);
+    clone.removeAttribute("style");
+    var token = ++textureToken;
+    var img = new Image();
+    img.onload = function () {
+      if (token !== textureToken || !viewer) return;
+      var cv = document.createElement("canvas");
+      cv.width = W; cv.height = H;
+      cv.getContext("2d").drawImage(img, 0, 0, W, H);
+      viewer.setLidCanvas(cv);
+    };
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone));
+  }
+
+  // Show what a choice does: open the lid when the lid type changes, look low for the feet.
+  form.addEventListener("change", function (e) {
+    if (!viewer || view !== "3d") return;
+    if (e.target.name === "lid") { viewer.lookLow(false); viewer.setOpen(true); syncLidButton(); }
+    if (e.target.name === "feet") { viewer.setOpen(false); viewer.lookLow(true); syncLidButton(); }
+  });
+  function syncLidButton() { $("lid-toggle").textContent = viewer && viewer.isOpen() ? "Sluit deksel" : "Open deksel"; }
+  $("lid-toggle").addEventListener("click", function () {
+    if (!viewer) return;
+    viewer.setOpen(!viewer.isOpen());
+    syncLidButton();
+  });
+
+  function no3d() {
+    $("tab-3d").hidden = true;
+    $("preview-3d").hidden = true;
+    showView("lid");
+  }
+  if (!window.WebGLRenderingContext) {
+    no3d();
+  } else {
+    $("tab-3d").hidden = false;
+    import(new URL("assets/js/memory-box-3d.js", document.baseURI).href)
+      .then(function (mod) {
+        viewer = mod.createViewer($("preview-3d"));
+        $("preview-3d-loading").hidden = true;
+        // Only draw while the 3D view is on screen.
+        if ("IntersectionObserver" in window) {
+          new IntersectionObserver(function (entries) {
+            if (!viewer) return;
+            if (entries[0].isIntersecting && view === "3d") viewer.start(); else viewer.stop();
+          }).observe($("preview-3d"));
+        }
+        if (view === "3d") viewer.start();
+        render();
+      })
+      .catch(function (err) {
+        if (window.console) console.warn("3D preview not available:", err);
+        no3d();
+      });
+  }
   // Fonts change text widths: draw again once they are in.
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
   render();

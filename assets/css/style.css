@@ -361,6 +361,16 @@ p { margin: 0; }
 }
 .preview-tabs button[aria-selected="true"] { color: var(--creafluxe-gray); border-bottom-color: var(--creafluxe-orange); }
 .preview-svg { width: 100%; height: auto; aspect-ratio: 4 / 3; background: var(--surface-alt); display: block; }
+.preview-3d { position: relative; width: 100%; aspect-ratio: 4 / 3; background: var(--surface-alt); overflow: hidden; }
+.preview-3d canvas { display: block; width: 100% !important; height: 100% !important; touch-action: none; cursor: grab; }
+.preview-3d canvas:active { cursor: grabbing; }
+.preview-3d-loading { position: absolute; inset: 0; display: grid; place-items: center; font-size: 14px; color: var(--ink-muted); }
+.preview-3d-bar { position: absolute; left: var(--space-3); right: var(--space-3); bottom: var(--space-3); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); pointer-events: none; }
+.preview-3d-bar .btn { pointer-events: auto; background: rgba(255, 255, 255, .92); }
+.preview-3d-bar .btn:hover { background: var(--creafluxe-gray); }
+.preview-3d-bar .caption { background: rgba(245, 242, 239, .85); padding: 2px 6px; }
+@media (max-width: 640px) { .preview-3d-bar .caption { display: none; } }
+.config-preview [hidden] { display: none !important; }
 .preview-svg .wood { fill: #ecd7b4; stroke: #a9875f; stroke-width: 1; }
 .preview-svg .wood-dark { fill: #dcc29a; stroke: #a9875f; stroke-width: 1; }
 .preview-svg .engrave { fill: none; stroke: #6b4a2b; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }

@@ -17,6 +17,8 @@ Statische website in HTML, CSS en een beetje JavaScript, met één PHP-script vo
 | `herinneringsdoos.html` | Samensteller voor de herinneringsdoos: keuzes met live voorbeeld, verstuurt via `php/aanvraag.php` |
 | `assets/js/configurator-memory-box.js` | Logica en voorbeeld van de samensteller; maakt de configuratie (JSON) |
 | `php/memory-box.php` | Controleert die configuratie en zet ze in woorden voor de e-mails |
+| `assets/js/memory-box-3d.js` | 3D-voorbeeld van de doos (deksels openen, pootjes, vakken, gravure); valt terug op de 2D-tekening zonder WebGL |
+| `assets/vendor/three/` | three.js 0.160.0 (MIT), lokaal gehost zodat de pagina geen externe diensten laadt |
 | `private/config.example.php` | Voorbeeld van de instellingen; kopieer naar `private/config.php` |
 
 ## Online zetten
