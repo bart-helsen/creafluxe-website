@@ -33,9 +33,25 @@
     return n;
   }
 
+  // Overview photo: vector engraving, else bitmap engraving, else scored, else
+  // unprocessed (cut only as a last resort).
+  var COVER_ORDER = ["ENGRAVE_VECTOR", "ENGRAVE_BITMAP", "SCORE", "RAW", "CUT"];
+  // Detail view order: unprocessed, vector, bitmap, scored (cut last).
+  var DETAIL_ORDER = ["RAW", "ENGRAVE_VECTOR", "ENGRAVE_BITMAP", "SCORE", "CUT"];
+
+  function operationsInOrder(m, order) {
+    var out = [];
+    order.forEach(function (key) {
+      m.operations.forEach(function (op) {
+        if (op.operation === key && op.samples.length) out.push(op);
+      });
+    });
+    return out;
+  }
+
   function cover(m) {
-    var first = m.operations[0];
-    return first && first.samples[0];
+    var ops = operationsInOrder(m, COVER_ORDER);
+    return ops.length ? ops[0].samples[0] : null;
   }
 
   // ---- Cards ------------------------------------------------------------
@@ -110,12 +126,13 @@
     var wrap = document.getElementById("mat-dialog-ops");
     wrap.textContent = "";
     var all = [];
-    m.operations.forEach(function (op) {
+    var detailOps = operationsInOrder(m, DETAIL_ORDER);
+    detailOps.forEach(function (op) {
       op.samples.forEach(function (s) {
         all.push({ sample: s, label: op.label, material: m.name });
       });
     });
-    m.operations.forEach(function (op) {
+    detailOps.forEach(function (op) {
       var section = el("section", "mat-op");
       section.appendChild(el("h3", null, op.label));
       section.appendChild(el("p", "mat-op-explain", EXPLAIN[op.operation] || ""));
