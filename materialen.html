@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="nl-BE">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Materialen en stalen · Creafluxe</title>
+  <meta name="description" content="Zie hoe elk materiaal eruitziet onbewerkt, gegraveerd, gescoord en gesneden. Echte stalen van 10 × 10 cm, gemaakt in het atelier van Creafluxe.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css?v=5">
+  <meta property="og:title" content="Materialen en stalen · Creafluxe">
+  <meta property="og:description" content="Echte stalen per materiaal: onbewerkt, gegraveerd, gescoord en gesneden.">
+  <meta property="og:type" content="website">
+  <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/materialen.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./" aria-label="Creafluxe, naar de startpagina">
+        <img src="assets/img/logo.svg" alt="Creafluxe" width="212" height="94">
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Hoofdmenu">
+        <a href="./#werkwijze">Werkwijze</a>
+        <a href="./#realisaties">Realisaties</a>
+        <a href="./#technieken">Technieken</a>
+        <a href="materialen.html" aria-current="page">Materialen</a>
+        <a href="./#over">Over mij</a>
+        <a class="btn btn-small" href="./#aanvraag">Start met je idee</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Materialen</p>
+          <h1 class="page-title">Zie hoe jouw materiaal eruitziet</h1>
+          <p class="section-intro">Elk staal is 10 × 10 cm en gemaakt in mijn atelier, met dezelfde tekening op elk materiaal. Zo vergelijk je rechtstreeks hoe de laser het materiaal onbewerkt, gegraveerd, gescoord en gesneden laat zien.</p>
+        </header>
+
+        <div id="mat-filters" class="mat-filters" role="group" aria-label="Filter op soort materiaal" hidden></div>
+        <p id="mat-status" class="mat-status" role="status">Materialen laden…</p>
+        <div id="mat-grid" class="mat-grid"></div>
+
+        <noscript>
+          <p class="mat-status">Voor het tonen van de stalen is JavaScript nodig. Mail me gerust op <a href="mailto:offerte@creafluxe.be">offerte@creafluxe.be</a>, dan stuur ik foto's door.</p>
+        </noscript>
+
+        <div class="configurator-teaser">
+          <div>
+            <p class="eyebrow">Twijfel je?</p>
+            <h2 class="teaser-title">Niet zeker welk materiaal bij je idee past?</h2>
+            <p>Vertel me wat je wil maken. Ik adviseer een materiaal en maak graag eerst een proefstuk.</p>
+          </div>
+          <a class="btn" href="./#aanvraag">Start met je idee</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="mat-dialog" class="mat-dialog" aria-labelledby="mat-dialog-title">
+    <div class="mat-dialog-inner">
+      <button class="mat-close" type="button" data-close aria-label="Sluiten">×</button>
+      <p id="mat-dialog-cat" class="eyebrow"></p>
+      <h2 id="mat-dialog-title"></h2>
+      <p id="mat-dialog-text" class="section-intro"></p>
+      <div id="mat-dialog-ops" class="mat-ops"></div>
+      <div class="mat-dialog-foot">
+        <a id="mat-dialog-cta" class="btn" href="./#aanvraag">Vraag een offerte met dit materiaal</a>
+        <p class="caption">Stalen van 10 × 10 cm. Kleuren kunnen op je scherm licht afwijken.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="mat-zoom" class="mat-zoom" aria-label="Vergrote foto">
+    <button class="mat-close" type="button" data-close aria-label="Sluiten">×</button>
+    <button class="mat-nav mat-prev" type="button" aria-label="Vorige foto">‹</button>
+    <figure>
+      <img id="mat-zoom-img" alt="">
+      <figcaption id="mat-zoom-cap"></figcaption>
+    </figure>
+    <button class="mat-nav mat-next" type="button" aria-label="Volgende foto">›</button>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <img src="assets/img/logo-wit.svg" alt="Creafluxe" width="180" height="80" loading="lazy">
+      <div class="footer-cols">
+        <div>
+          <p class="footer-label">Contact</p>
+          <p><a href="mailto:offerte@creafluxe.be">offerte@creafluxe.be</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Pagina's</p>
+          <p><a href="./#werkwijze">Werkwijze</a><br><a href="./#realisaties">Realisaties</a><br><a href="materialen.html">Materialen</a><br><a href="privacy.html">Privacy</a></p>
+        </div>
+      </div>
+      <p class="footer-small">© <span id="year">2026</span> Creafluxe · Bring your design to life</p>
+    </div>
+  </footer>
+</body>
+</html>

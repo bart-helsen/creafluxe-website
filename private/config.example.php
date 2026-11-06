@@ -9,6 +9,9 @@ return [
     'intake_url' => 'https://admin.creafluxe.be/api/orders/intake',
     'intake_key' => '',
 
+    // The admin app the Materialen page reads its photos from (optional; this is the default).
+    'admin_url' => 'https://admin.creafluxe.be',
+
     // Where new requests go, and the sender address (must be a mailbox on your own domain).
     'notify_to' => 'offerte@creafluxe.be',
     'mail_from' => 'noreply@creafluxe.be',
