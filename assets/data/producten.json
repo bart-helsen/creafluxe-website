@@ -1,0 +1,54 @@
+{
+  "_uitleg": "Producten van de webshop. 'price' in euro per stuk, of weglaten voor 'prijs op aanvraag'. 'image' is optioneel: een foto in assets/img/producten/ (4:3). Zonder foto toont de site de lijntekening 'art' (zie assets/js/webshop.js). 'personalise' bepaalt welke velden de klant krijgt: 'text', 'file' of allebei.",
+  "products": [
+    {
+      "id": "doosje",
+      "name": "Gepersonaliseerd doosje",
+      "category": "Doosjes",
+      "price": 35,
+      "art": "box",
+      "text": "Een houten doosje om in te bewaren wat je wil, met jouw naam, tekst of tekening op het deksel.",
+      "personalise": ["text", "file"]
+    },
+    {
+      "id": "naambordje",
+      "name": "Naambordje",
+      "category": "Naambordjes",
+      "art": "sign",
+      "text": "Een bordje met een naam of korte tekst, uitgesneden of gegraveerd. Voor een kinderkamer, een voordeur of een bureau.",
+      "personalise": ["text", "file"]
+    },
+    {
+      "id": "puzzel",
+      "name": "Puzzel met eigen foto of tekening",
+      "category": "Puzzels",
+      "art": "puzzle",
+      "text": "Een houten puzzel waarop ik jouw foto of tekening graveer. Stuur de afbeelding mee, ik zorg voor de rest.",
+      "personalise": ["text", "file"]
+    },
+    {
+      "id": "sleutelhanger",
+      "name": "Sleutelhanger met foto of naam",
+      "category": "Originele graveringen",
+      "art": "keyring",
+      "text": "Een sleutelhanger met een eigen foto, naam of datum erin gegraveerd. Klein cadeau, groot effect.",
+      "personalise": ["text", "file"]
+    },
+    {
+      "id": "wijnlocomotief",
+      "name": "Wijnlocomotief",
+      "category": "Decoratie",
+      "art": "train",
+      "text": "Een houten locomotief als houder voor een fles wijn. Met een naam of boodschap wordt het een cadeau om af te geven.",
+      "personalise": ["text"]
+    },
+    {
+      "id": "kerstslee",
+      "name": "Kerstslee",
+      "category": "Kerstversiering",
+      "art": "sleigh",
+      "text": "Een houten slee als kerstdecoratie, met een naam of een jaartal erop als je dat wil.",
+      "personalise": ["text"]
+    }
+  ]
+}

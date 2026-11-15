@@ -1,0 +1,126 @@
+<!--
+title: Organizer-wand samenstellen · Creafluxe
+description: Stel je eigen organizer-wand samen: kies de grootte van het wandpaneel, de maten van de bakjes en hoeveel je er nodig hebt. Creafluxe snijdt alles op maat.
+nav: webshop
+scripts: assets/js/configurator-organizer.js
+-->
+  <main id="main">
+    <section class="section config-section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Zelf samenstellen</p>
+          <h1>Organizer-wand</h1>
+          <p class="section-intro">Een wandpaneel vol ophangpunten, met bakjes die je erin haakt en verhangt wanneer je wil. Handig voor verf, gereedschap, naaigerei of bureauspullen. Kies de grootte van de wand en de bakjes die je nodig hebt. Je krijgt binnen twee werkdagen een prijs; pas als je akkoord gaat, maak ik ze.</p>
+        </div>
+
+        <noscript><p class="hint is-warning">De samensteller werkt met JavaScript. Staat dat uit? Beschrijf je wand dan via het <a href="atelier.html#aanvraag">aanvraagformulier</a>.</p></noscript>
+
+        <form class="config" id="wall-form" action="php/aanvraag.php" method="post" novalidate>
+          <input type="hidden" name="product" value="organizing-wall">
+          <input type="hidden" name="configuration" id="c-configuration" value="">
+
+          <!-- Live preview -->
+          <div class="config-preview">
+            <svg id="wall-svg" class="wall-svg" role="img" aria-labelledby="wall-desc" xmlns="http://www.w3.org/2000/svg"></svg>
+            <p class="caption" id="wall-desc"></p>
+            <p class="hint" id="wall-hint" role="status" aria-live="polite"></p>
+            <p class="caption">Vooraanzicht. De letters verwijzen naar de bakjes in je lijst, de oranje punten zijn de haakjes waarmee een bakje hangt.</p>
+          </div>
+
+          <div class="config-steps">
+            <!-- 1. Wand -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">1</span> De wand</legend>
+              <div class="choice-grid">
+                <label class="choice"><input type="radio" name="wall" value="590x300"><span><strong>Klein</strong><small>590 × 300 mm · één paneel</small></span></label>
+                <label class="choice"><input type="radio" name="wall" value="900x600" checked><span><strong>Standaard</strong><small>900 × 600 mm · boven een werktafel</small></span></label>
+                <label class="choice"><input type="radio" name="wall" value="1200x600"><span><strong>Breed</strong><small>1200 × 600 mm</small></span></label>
+                <label class="choice"><input type="radio" name="wall" value="custom"><span><strong>Eigen maat</strong><small>breedte en hoogte in mm</small></span></label>
+              </div>
+              <div class="field-row" id="custom-wall" hidden>
+                <div class="field">
+                  <label for="w-w">Breedte (mm)</label>
+                  <input id="w-w" type="number" inputmode="numeric" min="300" max="2400" step="10" value="900">
+                </div>
+                <div class="field">
+                  <label for="w-h">Hoogte (mm)</label>
+                  <input id="w-h" type="number" inputmode="numeric" min="300" max="1500" step="10" value="600">
+                </div>
+              </div>
+              <p class="hint">Een wand die groter is dan één plaat bestaat uit meerdere panelen die naadloos aansluiten. Om de 32 mm zit een ophangpunt.</p>
+            </fieldset>
+
+            <!-- 2. Bakjes -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">2</span> De bakjes</legend>
+              <p class="hint">Alle maten zijn binnenmaten. Een bakje dat achteraan hoger is dan vooraan toont beter wat erin zit. Vertrek van een voorbeeld of kies "Eigen maat".</p>
+              <div class="box-list" id="box-list"></div>
+              <div><button type="button" class="btn btn-ghost btn-small" id="add-box">Nog een soort bakje toevoegen</button></div>
+            </fieldset>
+
+            <!-- 3. Gegevens -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">3</span> Je gegevens</legend>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-name">Naam</label>
+                  <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
+                </div>
+                <div class="field">
+                  <label for="f-email">E-mail</label>
+                  <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200">
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-phone">Telefoon <span class="optional">(optioneel)</span></label>
+                <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+              </div>
+              <div class="field">
+                <label for="f-brief">Opmerkingen <span class="optional">(optioneel)</span></label>
+                <textarea id="f-brief" name="brief" rows="3" maxlength="4000" placeholder="Wat je wil opbergen, waar de wand komt te hangen, voor wanneer je ze nodig hebt…"></textarea>
+              </div>
+
+{{> form-common}}
+
+              <div class="field check">
+                <input id="f-privacy" name="privacy" type="checkbox" value="1" required>
+                <label for="f-privacy">Ik ga akkoord dat Creafluxe mijn gegevens gebruikt om deze aanvraag te beantwoorden. Lees de <a href="privacy.html">privacyverklaring</a>.</label>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn" type="submit">Vraag een prijs aan</button>
+                <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+              </div>
+              <p class="hint">Dit is nog geen bestelling. Je krijgt eerst een voorstel met prijs.</p>
+            </fieldset>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section band-alt">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Zo werkt het</p>
+          <h2>Inhaken, laten zakken, klaar</h2>
+        </header>
+        <ol class="steps">
+          <li class="step reveal" style="--d:0">
+            <span class="step-label">Wand</span>
+            <h3>Panelen met sleutelgaten</h3>
+            <p>Je schroeft de panelen op de muur, met afstandsringen erachter. Elk sleutelgat is een ophangpunt.</p>
+          </li>
+          <li class="step reveal" style="--d:1">
+            <span class="step-label">Bakje</span>
+            <h3>Haakjes op de rug</h3>
+            <p>Elk bakje heeft minstens twee ronde haakjes. Duw ze door de gaten en laat het bakje een centimeter zakken: het zit vast.</p>
+          </li>
+          <li class="step reveal" style="--d:2">
+            <span class="step-label">Verhangen</span>
+            <h3>Optillen en verplaatsen</h3>
+            <p>Til een bakje een centimeter op en je neemt het eraf. Zo verander je de indeling zonder gereedschap.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>

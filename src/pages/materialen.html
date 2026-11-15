@@ -1,0 +1,116 @@
+<!--
+title: Materialen en technieken · Creafluxe
+description: Welke materialen Creafluxe snijdt en graveert, hoe snijden, lijngraveren, vlakgraveren en fotograveren eruitzien, en echte stalen van elk materiaal.
+nav: materialen
+scripts: assets/js/materialen.js
+-->
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <p class="eyebrow">Materialen en technieken</p>
+        <h1>Wat kan de laser, en op welk materiaal?</h1>
+        <p class="lead">Dezelfde laser snijdt, tekent lijnen, vult vlakken en graveert foto's. Hieronder zie je wat elke techniek doet, welke materialen ik verwerk en hoe het resultaat er op echte stalen uitziet.</p>
+        <div class="btn-row">
+          <a class="btn" href="#stalen">Bekijk de stalen</a>
+          <a class="btn btn-ghost" href="#overzicht">Overzicht per materiaal</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Techniques -->
+    <section class="section">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Technieken</p>
+          <h2>Vier bewerkingen, één machine</h2>
+          <p class="section-intro">In één stuk kun je ze combineren: een naambord wordt uitgesneden, de naam gegraveerd en de rand met een fijne lijn afgewerkt.</p>
+        </header>
+{{> techniques}}
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section id="overzicht" class="section band-alt">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Overzicht</p>
+          <h2>Materialen waar ik mee werk</h2>
+        </header>
+        <div class="table-wrap reveal">
+          <table class="materials">
+            <thead>
+              <tr><th scope="col">Materiaal</th><th scope="col">Snijden</th><th scope="col">Graveren</th><th scope="col">Goed voor</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Hout en multiplex</th><td><span class="yes">Ja</span></td><td><span class="yes">Ja</span></td><td>Bordjes, doosjes, decoratie, puzzels</td></tr>
+              <tr><th scope="row">MDF</th><td><span class="yes">Ja</span></td><td><span class="yes">Ja</span></td><td>Bouwpakketten, organizers, prototypes</td></tr>
+              <tr><th scope="row">Acryl (plexiglas)</th><td><span class="yes">Ja</span>, tot 20 mm</td><td><span class="yes">Ja</span></td><td>Naamborden, taarttoppers, displays, logo's</td></tr>
+              <tr><th scope="row">Leder</th><td><span class="yes">Ja</span></td><td><span class="yes">Ja</span></td><td>Sleutelhangers, labels, patches</td></tr>
+              <tr><th scope="row">Karton en papier</th><td><span class="yes">Ja</span></td><td><span class="yes">Ja</span></td><td>Uitnodigingen, verpakking, maquettes</td></tr>
+              <tr><th scope="row">Glas, steen en keramiek</th><td><span class="no">Nee</span></td><td><span class="yes">Ja</span></td><td>Glazen, leisteen onderzetters, tegels</td></tr>
+              <tr><th scope="row">Gecoat metaal</th><td><span class="no">Nee</span></td><td><span class="yes">Ja</span></td><td>Drinkflessen, pennen, plaatjes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption note">Staat je materiaal er niet bij, of breng je het liever zelf mee? Vraag het gerust. PVC en vinyl verwerk ik niet: die geven schadelijke dampen.</p>
+
+        <dl class="facts facts-3 section-foot">
+          <div><dt>Machine</dt><dd>55 W<small>CO₂-laser (xTool P2S) met camera om precies te positioneren</small></dd></div>
+          <div><dt>Werkvlak</dt><dd>600 × 305 mm<small>per plaat. Langere stukken schuiven door de machine, grotere ontwerpen verdeel ik over meerdere platen.</small></dd></div>
+          <div><dt>Dikte</dt><dd>tot 20 mm<small>in acryl. Hout en MDF snijd ik vaak in 3 mm; andere diktes op aanvraag.</small></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Samples from the admin app -->
+    <section id="stalen" class="section">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Stalen</p>
+          <h2>Zie hoe jouw materiaal eruitziet</h2>
+          <p class="section-intro">Elk staal is 10 × 10 cm en gemaakt in mijn atelier, met dezelfde tekening op elk materiaal. Zo vergelijk je rechtstreeks hoe het er onbewerkt, gegraveerd, gescoord en gesneden uitziet. Klik op een materiaal voor alle foto's.</p>
+        </header>
+
+        <div id="mat-filters" class="mat-filters" role="group" aria-label="Filter op soort materiaal" hidden></div>
+        <p id="mat-status" class="mat-status" role="status">Materialen laden…</p>
+        <div id="mat-grid" class="mat-grid"></div>
+
+        <noscript>
+          <p class="mat-status">Voor het tonen van de stalen is JavaScript nodig. Mail me gerust op <a href="mailto:offer@creafluxe.be">offer@creafluxe.be</a>, dan stuur ik foto's door.</p>
+        </noscript>
+
+        <div class="teaser section-foot">
+          <div>
+            <p class="eyebrow">Twijfel je?</p>
+            <h2>Niet zeker welk materiaal bij je idee past?</h2>
+            <p>Vertel me wat je wil maken. Ik adviseer een materiaal en maak graag eerst een proefstuk.</p>
+          </div>
+          <a class="btn" href="atelier.html#aanvraag">Start met je idee</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="mat-dialog" class="mat-dialog" aria-labelledby="mat-dialog-title">
+    <div class="mat-dialog-inner">
+      <button class="mat-close" type="button" data-close aria-label="Sluiten">×</button>
+      <p id="mat-dialog-cat" class="eyebrow"></p>
+      <h2 id="mat-dialog-title"></h2>
+      <p id="mat-dialog-text" class="section-intro"></p>
+      <div id="mat-dialog-ops" class="mat-ops"></div>
+      <div class="mat-dialog-foot">
+        <a id="mat-dialog-cta" class="btn" href="atelier.html#aanvraag">Vraag een offerte met dit materiaal</a>
+        <p class="caption">Stalen van 10 × 10 cm. Kleuren kunnen op je scherm licht afwijken.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="mat-zoom" class="mat-zoom" aria-label="Vergrote foto">
+    <button class="mat-close" type="button" data-close aria-label="Sluiten">×</button>
+    <button class="mat-nav mat-prev" type="button" aria-label="Vorige foto">‹</button>
+    <figure>
+      <img id="mat-zoom-img" alt="">
+      <figcaption id="mat-zoom-cap"></figcaption>
+    </figure>
+    <button class="mat-nav mat-next" type="button" aria-label="Volgende foto">›</button>
+  </dialog>

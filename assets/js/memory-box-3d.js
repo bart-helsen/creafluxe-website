@@ -22,6 +22,42 @@ const HINGE_INSET = 18, HINGE_KNUCKLE_H = 24, HINGE_PIN_D = 3, HINGE_RING = 3;
 
 const BG = 0xf5f2ef;
 
+// The box is always built in one base layout: the sliding lid opens to the front (+z), the hinge sits at the
+// back (-z). Any other side is that same box turned about the vertical axis by quarter turns (counter-clockwise
+// seen from above), with the inside width and depth swapped for left / right. Same scheme as the generator
+// (memorybox.py: SLIDE_TURNS, HINGE_TURNS, base_dividers).
+const SLIDE_TURNS = { front: 0, right: 1, back: 2, left: 3 };
+const HINGE_TURNS = { back: 0, left: 1, front: 2, right: 3 };
+
+function quarterTurns(o) {
+  if (o.lid === "slide") return SLIDE_TURNS[o.lidSide] || 0;
+  if (o.lid === "hinge") return HINGE_TURNS[o.lidSide] || 0;
+  return 0;
+}
+
+/** Dividers as the customer gave them (fractions of the width from the left / of the depth from the front) in the base layout. */
+function baseDividers(turns, xs, ys) {
+  const flip = (a) => a.map((f) => 1 - f);
+  if (turns === 1) return [ys, flip(xs)];
+  if (turns === 2) return [flip(xs), flip(ys)];
+  if (turns === 3) return [flip(ys), xs];
+  return [xs, ys];
+}
+
+/** The lid drawing (seen from above, as the customer sees it) turned into the base layout of the lid. */
+function turnCanvas(src, turns) {
+  if (!turns) return src;
+  const odd = turns % 2 === 1;
+  const c = document.createElement("canvas");
+  c.width = odd ? src.height : src.width;
+  c.height = odd ? src.width : src.height;
+  const g = c.getContext("2d");
+  g.translate(c.width / 2, c.height / 2);
+  g.rotate((turns * Math.PI) / 2);               // clockwise on screen: the opposite of the box's turn
+  g.drawImage(src, -src.width / 2, -src.height / 2);
+  return c;
+}
+
 // ------------------------------------------------------------------ textures
 
 function woodCanvas(seed, base, w = 512, h = 512) {
@@ -203,7 +239,10 @@ export function createViewer(container) {
 
   function build(o) {
     const g = new THREE.Group();
-    const W = o.inner.w, D = o.inner.d, H = o.inner.h;
+    const turns = quarterTurns(o);
+    const swap = turns % 2 === 1;
+    const W = swap ? o.inner.d : o.inner.w, D = swap ? o.inner.w : o.inner.d, H = o.inner.h;
+    const [divX, divY] = baseDividers(turns, o.dividers, o.dividersY);
     const Wo = W + 2 * T, Do = D + 2 * T;
     const Hw = FOOT + T + H;                       // wall height
     const slide = o.lid === "slide";
@@ -237,7 +276,7 @@ export function createViewer(container) {
     // dividers
     const liner = slide ? T : 0;
     const Wu = W - 2 * liner;
-    const crossing = o.dividers.length > 0 && o.dividersY.length > 0;
+    const crossing = divX.length > 0 && divY.length > 0;
     const hdiv = Math.max(20, H - 12);
     const dip = crossing ? 0 : DIVIDER_DIP;
     const divShape = (L) => {
@@ -246,11 +285,11 @@ export function createViewer(container) {
       pts.push([0, hdiv]);
       return polyShape(pts);
     };
-    for (const f of o.dividers) {
+    for (const f of divX) {
       const x = -Wu / 2 + f * Wu - T / 2;
       g.add(part(divShape(D), T, mats.plate, (m) => { m.rotation.y = Math.PI / 2; m.position.set(x, FOOT + T, D / 2); }));
     }
-    for (const f of o.dividersY) {
+    for (const f of divY) {
       const z = D / 2 - f * D - T / 2;
       g.add(part(divShape(Wu), T, mats.plate, (m) => m.position.set(-Wu / 2, FOOT + T, z)));
     }
@@ -385,7 +424,8 @@ export function createViewer(container) {
 
     // how high the open lid reaches, so the camera keeps it in view
     const reach = o.lid === "hinge" ? Hw + Do * 0.85 : o.lid === "lift" ? Hw + 75 : Hw;
-    return { group: g, lidGroup: lg, open, size: { Wo, Do, Hw, reach }, key: [W, D, H, o.lid].join("x") };
+    g.rotation.y = (turns * Math.PI) / 2;          // turn the base layout to the side the customer chose
+    return { group: g, lidGroup: lg, open, turns, size: { Wo, Do, Hw, reach }, key: [W, D, H, o.lid, o.lidSide].join("x") };
   }
 
   function rectShapeTop(x0, y0, x1, y1) {
@@ -472,7 +512,8 @@ export function createViewer(container) {
       lastSize = box.key;
     },
     /** Canvas with the engraving (transparent elsewhere), covering the lid's texture area. */
-    setLidCanvas(engraving) {
+    setLidCanvas(engraving, o) {
+      engraving = turnCanvas(engraving, o ? quarterTurns(o) : 0);
       const c = document.createElement("canvas");
       c.width = engraving.width; c.height = engraving.height;
       const g = c.getContext("2d");

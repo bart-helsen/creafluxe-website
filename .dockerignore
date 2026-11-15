@@ -4,3 +4,5 @@
 .dockerignore
 README.md
 private/config.php
+src
+tools

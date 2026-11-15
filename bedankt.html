@@ -1,29 +1,75 @@
 <!doctype html>
+<!-- Gegenereerd uit src/pages/bedankt.html. Pas dat bestand aan en draai: python tools/build.py -->
 <html lang="nl-BE">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bedankt · Creafluxe</title>
-  <meta name="robots" content="noindex">
+  <meta name="description" content="Je aanvraag is verstuurd.">
+  <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preload" href="assets/fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+  <meta property="og:title" content="Bedankt · Creafluxe">
+  <meta property="og:description" content="Je aanvraag is verstuurd.">
+  <meta property="og:type" content="website">
+  <script>document.documentElement.classList.add("js");</script>
+  <script defer src="assets/js/main.js?v=6"></script>
 </head>
 <body>
+  <a class="skip" href="#main">Naar de inhoud</a>
+
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="./" aria-label="Creafluxe, naar de startpagina"><img src="assets/img/logo.svg" alt="Creafluxe" width="212" height="94"></a>
+      <a class="brand" href="./" aria-label="Creafluxe, naar de startpagina">
+        <img src="assets/img/logo.svg" alt="Creafluxe" width="212" height="94">
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Hoofdmenu">
+        <a href="atelier.html">Atelier</a>
+        <a href="webshop.html">Webshop</a>
+        <a href="materialen.html">Materialen</a>
+        <a href="ontwerpgids.html">Ontwerpgids</a>
+        <a class="btn btn-small" href="atelier.html#aanvraag">Vraag een offerte</a>
+      </nav>
     </div>
   </header>
-  <main class="page">
+
+<main id="main" class="page">
     <div class="container">
-      <p class="eyebrow">Aanvraag verstuurd</p>
-      <h1>Bedankt, ik heb je idee goed ontvangen.</h1>
+      <p class="eyebrow">Verstuurd</p>
+      <h1>Bedankt, ik heb je aanvraag goed ontvangen.</h1>
       <p class="lead">Je krijgt zo dadelijk een bevestiging per e-mail. Binnen twee werkdagen hoor je van me met een voorstel en een prijs.</p>
       <div class="btn-row" style="margin-top:24px">
         <a class="btn" href="./">Terug naar de startpagina</a>
-        <a class="btn btn-ghost" href="./#realisaties">Bekijk realisaties</a>
+        <a class="btn btn-ghost" href="webshop.html">Bekijk de webshop</a>
       </div>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <img src="assets/img/logo-wit.svg" alt="Creafluxe" width="180" height="80" loading="lazy">
+      <div class="footer-cols">
+        <div>
+          <p class="footer-label">Maken</p>
+          <p><a href="atelier.html">Atelier</a><br><a href="webshop.html">Webshop</a><br><a href="herinneringsdoos.html">Herinneringsdoos</a><br><a href="organizer-wand.html">Organizer-wand</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Weten</p>
+          <p><a href="materialen.html">Materialen</a><br><a href="ontwerpgids.html">Ontwerpgids</a><br><a href="privacy.html">Privacy</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Contact</p>
+          <p><a href="mailto:contact@creafluxe.be">contact@creafluxe.be</a><br><a href="https://www.instagram.com/creafluxe/" rel="noopener">Instagram</a><br><a href="https://www.facebook.com/profile.php?id=61586495937170" rel="noopener">Facebook</a></p>
+          <!-- TODO: adres of regio, telefoon en ondernemingsnummer (verplicht te vermelden) -->
+        </div>
+      </div>
+      <p class="footer-small">© <span id="year">2026</span> Creafluxe · Bring your design to life</p>
+    </div>
+  </footer>
 </body>
 </html>

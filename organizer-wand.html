@@ -1,0 +1,189 @@
+<!doctype html>
+<!-- Gegenereerd uit src/pages/organizer-wand.html. Pas dat bestand aan en draai: python tools/build.py -->
+<html lang="nl-BE">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Organizer-wand samenstellen · Creafluxe</title>
+  <meta name="description" content="Stel je eigen organizer-wand samen: kies de grootte van het wandpaneel, de maten van de bakjes en hoeveel je er nodig hebt. Creafluxe snijdt alles op maat.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+  <meta property="og:title" content="Organizer-wand samenstellen · Creafluxe">
+  <meta property="og:description" content="Stel je eigen organizer-wand samen: kies de grootte van het wandpaneel, de maten van de bakjes en hoeveel je er nodig hebt. Creafluxe snijdt alles op maat.">
+  <meta property="og:type" content="website">
+  <script>document.documentElement.classList.add("js");</script>
+  <script defer src="assets/js/main.js?v=6"></script>
+  <script defer src="assets/js/configurator-organizer.js?v=6"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./" aria-label="Creafluxe, naar de startpagina">
+        <img src="assets/img/logo.svg" alt="Creafluxe" width="212" height="94">
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Hoofdmenu">
+        <a href="atelier.html">Atelier</a>
+        <a href="webshop.html" aria-current="page">Webshop</a>
+        <a href="materialen.html">Materialen</a>
+        <a href="ontwerpgids.html">Ontwerpgids</a>
+        <a class="btn btn-small" href="atelier.html#aanvraag">Vraag een offerte</a>
+      </nav>
+    </div>
+  </header>
+
+<main id="main">
+    <section class="section config-section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Zelf samenstellen</p>
+          <h1>Organizer-wand</h1>
+          <p class="section-intro">Een wandpaneel vol ophangpunten, met bakjes die je erin haakt en verhangt wanneer je wil. Handig voor verf, gereedschap, naaigerei of bureauspullen. Kies de grootte van de wand en de bakjes die je nodig hebt. Je krijgt binnen twee werkdagen een prijs; pas als je akkoord gaat, maak ik ze.</p>
+        </div>
+
+        <noscript><p class="hint is-warning">De samensteller werkt met JavaScript. Staat dat uit? Beschrijf je wand dan via het <a href="atelier.html#aanvraag">aanvraagformulier</a>.</p></noscript>
+
+        <form class="config" id="wall-form" action="php/aanvraag.php" method="post" novalidate>
+          <input type="hidden" name="product" value="organizing-wall">
+          <input type="hidden" name="configuration" id="c-configuration" value="">
+
+          <!-- Live preview -->
+          <div class="config-preview">
+            <svg id="wall-svg" class="wall-svg" role="img" aria-labelledby="wall-desc" xmlns="http://www.w3.org/2000/svg"></svg>
+            <p class="caption" id="wall-desc"></p>
+            <p class="hint" id="wall-hint" role="status" aria-live="polite"></p>
+            <p class="caption">Vooraanzicht. De letters verwijzen naar de bakjes in je lijst, de oranje punten zijn de haakjes waarmee een bakje hangt.</p>
+          </div>
+
+          <div class="config-steps">
+            <!-- 1. Wand -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">1</span> De wand</legend>
+              <div class="choice-grid">
+                <label class="choice"><input type="radio" name="wall" value="590x300"><span><strong>Klein</strong><small>590 × 300 mm · één paneel</small></span></label>
+                <label class="choice"><input type="radio" name="wall" value="900x600" checked><span><strong>Standaard</strong><small>900 × 600 mm · boven een werktafel</small></span></label>
+                <label class="choice"><input type="radio" name="wall" value="1200x600"><span><strong>Breed</strong><small>1200 × 600 mm</small></span></label>
+                <label class="choice"><input type="radio" name="wall" value="custom"><span><strong>Eigen maat</strong><small>breedte en hoogte in mm</small></span></label>
+              </div>
+              <div class="field-row" id="custom-wall" hidden>
+                <div class="field">
+                  <label for="w-w">Breedte (mm)</label>
+                  <input id="w-w" type="number" inputmode="numeric" min="300" max="2400" step="10" value="900">
+                </div>
+                <div class="field">
+                  <label for="w-h">Hoogte (mm)</label>
+                  <input id="w-h" type="number" inputmode="numeric" min="300" max="1500" step="10" value="600">
+                </div>
+              </div>
+              <p class="hint">Een wand die groter is dan één plaat bestaat uit meerdere panelen die naadloos aansluiten. Om de 32 mm zit een ophangpunt.</p>
+            </fieldset>
+
+            <!-- 2. Bakjes -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">2</span> De bakjes</legend>
+              <p class="hint">Alle maten zijn binnenmaten. Een bakje dat achteraan hoger is dan vooraan toont beter wat erin zit. Vertrek van een voorbeeld of kies "Eigen maat".</p>
+              <div class="box-list" id="box-list"></div>
+              <div><button type="button" class="btn btn-ghost btn-small" id="add-box">Nog een soort bakje toevoegen</button></div>
+            </fieldset>
+
+            <!-- 3. Gegevens -->
+            <fieldset class="config-step">
+              <legend><span class="step-label">3</span> Je gegevens</legend>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-name">Naam</label>
+                  <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
+                </div>
+                <div class="field">
+                  <label for="f-email">E-mail</label>
+                  <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200">
+                </div>
+              </div>
+              <div class="field">
+                <label for="f-phone">Telefoon <span class="optional">(optioneel)</span></label>
+                <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+              </div>
+              <div class="field">
+                <label for="f-brief">Opmerkingen <span class="optional">(optioneel)</span></label>
+                <textarea id="f-brief" name="brief" rows="3" maxlength="4000" placeholder="Wat je wil opbergen, waar de wand komt te hangen, voor wanneer je ze nodig hebt…"></textarea>
+              </div>
+
+            <!-- Spam trap: hidden from people, bots tend to fill it in. -->
+            <div class="hp" aria-hidden="true">
+              <label>Laat dit veld leeg <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+            </div>
+            <input type="hidden" name="started" value="">
+
+              <div class="field check">
+                <input id="f-privacy" name="privacy" type="checkbox" value="1" required>
+                <label for="f-privacy">Ik ga akkoord dat Creafluxe mijn gegevens gebruikt om deze aanvraag te beantwoorden. Lees de <a href="privacy.html">privacyverklaring</a>.</label>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn" type="submit">Vraag een prijs aan</button>
+                <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+              </div>
+              <p class="hint">Dit is nog geen bestelling. Je krijgt eerst een voorstel met prijs.</p>
+            </fieldset>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section band-alt">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Zo werkt het</p>
+          <h2>Inhaken, laten zakken, klaar</h2>
+        </header>
+        <ol class="steps">
+          <li class="step reveal" style="--d:0">
+            <span class="step-label">Wand</span>
+            <h3>Panelen met sleutelgaten</h3>
+            <p>Je schroeft de panelen op de muur, met afstandsringen erachter. Elk sleutelgat is een ophangpunt.</p>
+          </li>
+          <li class="step reveal" style="--d:1">
+            <span class="step-label">Bakje</span>
+            <h3>Haakjes op de rug</h3>
+            <p>Elk bakje heeft minstens twee ronde haakjes. Duw ze door de gaten en laat het bakje een centimeter zakken: het zit vast.</p>
+          </li>
+          <li class="step reveal" style="--d:2">
+            <span class="step-label">Verhangen</span>
+            <h3>Optillen en verplaatsen</h3>
+            <p>Til een bakje een centimeter op en je neemt het eraf. Zo verander je de indeling zonder gereedschap.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <img src="assets/img/logo-wit.svg" alt="Creafluxe" width="180" height="80" loading="lazy">
+      <div class="footer-cols">
+        <div>
+          <p class="footer-label">Maken</p>
+          <p><a href="atelier.html">Atelier</a><br><a href="webshop.html">Webshop</a><br><a href="herinneringsdoos.html">Herinneringsdoos</a><br><a href="organizer-wand.html">Organizer-wand</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Weten</p>
+          <p><a href="materialen.html">Materialen</a><br><a href="ontwerpgids.html">Ontwerpgids</a><br><a href="privacy.html">Privacy</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Contact</p>
+          <p><a href="mailto:contact@creafluxe.be">contact@creafluxe.be</a><br><a href="https://www.instagram.com/creafluxe/" rel="noopener">Instagram</a><br><a href="https://www.facebook.com/profile.php?id=61586495937170" rel="noopener">Facebook</a></p>
+          <!-- TODO: adres of regio, telefoon en ondernemingsnummer (verplicht te vermelden) -->
+        </div>
+      </div>
+      <p class="footer-small">© <span id="year">2026</span> Creafluxe · Bring your design to life</p>
+    </div>
+  </footer>
+</body>
+</html>

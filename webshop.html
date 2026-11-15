@@ -1,0 +1,255 @@
+<!doctype html>
+<!-- Gegenereerd uit src/pages/webshop.html. Pas dat bestand aan en draai: python tools/build.py -->
+<html lang="nl-BE">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Webshop · Creafluxe</title>
+  <meta name="description" content="Kies een product dat Creafluxe al maakte en personaliseer het met een naam, tekst of eigen foto. Of stel zelf een herinneringsdoos of organizer-wand samen.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+  <meta property="og:title" content="Webshop · Creafluxe">
+  <meta property="og:description" content="Kies een product dat Creafluxe al maakte en personaliseer het met een naam, tekst of eigen foto. Of stel zelf een herinneringsdoos of organizer-wand samen.">
+  <meta property="og:type" content="website">
+  <script>document.documentElement.classList.add("js");</script>
+  <script defer src="assets/js/main.js?v=6"></script>
+  <script defer src="assets/js/webshop.js?v=6"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./" aria-label="Creafluxe, naar de startpagina">
+        <img src="assets/img/logo.svg" alt="Creafluxe" width="212" height="94">
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Hoofdmenu">
+        <a href="atelier.html">Atelier</a>
+        <a href="webshop.html" aria-current="page">Webshop</a>
+        <a href="materialen.html">Materialen</a>
+        <a href="ontwerpgids.html">Ontwerpgids</a>
+        <a class="btn btn-small" href="atelier.html#aanvraag">Vraag een offerte</a>
+      </nav>
+    </div>
+  </header>
+
+<main id="main">
+    <section class="page-head">
+      <div class="container">
+        <p class="eyebrow">Webshop</p>
+        <h1>Bestaande ontwerpen, afgewerkt met jouw naam, tekst of foto</h1>
+        <p class="lead">Elk stuk maak ik op bestelling. Kies een product, vertel wat erop moet komen en laad eventueel een eigen afbeelding op. Je krijgt een bevestiging met de prijs voor ik begin.</p>
+      </div>
+    </section>
+
+    <!-- Configurators -->
+    <section id="samenstellen" class="section band-alt">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Zelf samenstellen</p>
+          <h2>Bepaal zelf de maten, met live voorbeeld</h2>
+        </header>
+        <div class="duo">
+          <div class="teaser reveal" style="--d:0">
+            <div>
+              <p class="tag">Samensteller</p>
+              <h3>Herinneringsdoos</h3>
+              <p>Een houten doos voor foto's, kaartjes en kleine schatten. Kies formaat, deksel, vakken en de gravure op het deksel, en bekijk ze in 3D.</p>
+            </div>
+            <a class="btn" href="herinneringsdoos.html">Stel je doos samen</a>
+          </div>
+          <div class="teaser reveal" style="--d:1">
+            <div>
+              <p class="tag">Samensteller</p>
+              <h3>Organizer-wand</h3>
+              <p>Een wandpaneel waarop je bakjes ophangt en verhangt waar je wil. Kies de grootte van de wand, de maten van de bakjes en hoeveel je er nodig hebt.</p>
+            </div>
+            <a class="btn" href="organizer-wand.html">Stel je wand samen</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section class="section">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Producten</p>
+          <h2>Kies een ontwerp en maak het persoonlijk</h2>
+          <p class="section-intro">Klik op een product om je tekst in te vullen of een bestand op te laden.</p>
+        </header>
+        <div id="shop-filters" class="chip-row" role="group" aria-label="Filter op soort product" hidden></div>
+        <p id="shop-status" class="mat-status" role="status">Producten laden…</p>
+        <ul id="shop-grid" class="shop-grid"></ul>
+        <noscript>
+          <p class="mat-status">Voor de webshop is JavaScript nodig. Je kunt je bestelling ook doorgeven via het <a href="atelier.html#aanvraag">atelier</a>.</p>
+        </noscript>
+
+        <div class="teaser section-foot">
+          <div>
+            <p class="eyebrow">Niet gevonden wat je zoekt?</p>
+            <h2>Dan maken we het op maat</h2>
+            <p>Een ander formaat, een ander materiaal of een heel eigen ontwerp: in het atelier werk ik je idee uit.</p>
+          </div>
+          <a class="btn" href="atelier.html">Naar het atelier</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How ordering works -->
+    <section class="section band-alt">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Zo bestel je</p>
+          <h2>Eerst een bevestiging, dan pas maken</h2>
+        </header>
+        <ol class="steps">
+          <li class="step reveal" style="--d:0">
+            <span class="step-label">Kiezen</span>
+            <h3>Personaliseer je product</h3>
+            <p>Vul je tekst in, laad een foto of tekening op en kies het aantal.</p>
+          </li>
+          <li class="step reveal" style="--d:1">
+            <span class="step-label">Bevestigen</span>
+            <h3>Je krijgt een voorbeeld</h3>
+            <p>Binnen twee werkdagen stuur ik de prijs, een voorbeeld van de gravure en de betaalgegevens.</p>
+          </li>
+          <li class="step reveal" style="--d:2">
+            <span class="step-label">Maken</span>
+            <h3>Ik snijd en graveer</h3>
+            <p>Na je akkoord maak ik je stuk. Je haalt het op of laat het leveren.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="shop-dialog" class="shop-dialog" aria-labelledby="shop-title">
+    <div class="shop-dialog-inner">
+      <button class="mat-close" type="button" data-close aria-label="Sluiten">×</button>
+      <div id="shop-media" class="shop-dialog-media"></div>
+      <div class="shop-dialog-body">
+        <p id="shop-cat" class="eyebrow"></p>
+        <h2 id="shop-title"></h2>
+        <p id="shop-text" class="muted"></p>
+        <p id="shop-price" class="product-price"></p>
+
+        <form id="shop-form" class="form" action="php/aanvraag.php" method="post" enctype="multipart/form-data" novalidate data-request-form
+              data-success="Bedankt! Je bestelling is doorgestuurd. Je krijgt zo dadelijk een bevestiging per e-mail.">
+          <input type="hidden" name="kind" value="webshop">
+          <input type="hidden" name="product_id" value="">
+
+          <div class="field" id="shop-text-field">
+            <label for="s-text">Tekst op je product <span class="optional">(optioneel)</span></label>
+            <textarea id="s-text" name="personal_text" rows="2" maxlength="300" placeholder="bv. een naam, een datum of een korte boodschap"></textarea>
+            <p class="hint">Schrijf de tekst precies zoals hij erop moet komen, met hoofdletters en leestekens.</p>
+          </div>
+          <div class="field" id="shop-file-field">
+            <label for="s-files">Eigen foto, logo of tekening <span class="optional">(optioneel)</span></label>
+            <div class="dropzone">
+              <span class="dropzone-title">Sleep je bestand hierheen of kies het</span>
+              <input id="s-files" name="files[]" type="file" multiple data-max-files="3" accept=".jpg,.jpeg,.png,.pdf,.svg,.dxf,.dwg,.ai,.eps,image/*,application/pdf">
+              <ul class="file-list" aria-live="polite"></ul>
+            </div>
+            <p class="hint">Maximaal 3 bestanden van elk 10 MB. Een scherpe foto of een lijntekening met duidelijk contrast werkt het best. <a href="ontwerpgids.html#foto">Tips voor foto's</a>.</p>
+          </div>
+          <div class="field">
+            <label for="s-quantity">Aantal</label>
+            <div class="qty">
+              <button type="button" data-step="-1" aria-label="Eén minder">−</button>
+              <input id="s-quantity" name="quantity" type="number" inputmode="numeric" min="1" max="50" step="1" value="1">
+              <button type="button" data-step="1" aria-label="Eén meer">+</button>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="s-name">Naam</label>
+              <input id="s-name" name="name" type="text" autocomplete="name" required maxlength="120">
+            </div>
+            <div class="field">
+              <label for="s-email">E-mail</label>
+              <input id="s-email" name="email" type="email" autocomplete="email" required maxlength="200">
+            </div>
+          </div>
+          <div class="field">
+            <label for="s-phone">Telefoon <span class="optional">(optioneel)</span></label>
+            <input id="s-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+          </div>
+          <div class="field">
+            <label for="s-brief">Opmerkingen <span class="optional">(optioneel)</span></label>
+            <textarea id="s-brief" name="brief" rows="2" maxlength="4000" placeholder="Lettertype, plaats van de tekst, voor wanneer je het nodig hebt…"></textarea>
+          </div>
+          <div class="field check">
+            <input id="s-delivery" name="delivery" type="checkbox" value="1">
+            <label for="s-delivery">Ik wil het laten leveren. <span class="optional">De leveringskost staat in de bevestiging.</span></label>
+          </div>
+          <div id="s-address" class="form" hidden>
+            <div class="field">
+              <label for="s-street">Straat en huisnummer</label>
+              <input id="s-street" name="street" type="text" autocomplete="street-address" maxlength="160">
+            </div>
+            <div class="field-row field-row-3">
+              <div class="field">
+                <label for="s-postcode">Postcode</label>
+                <input id="s-postcode" name="postcode" type="text" autocomplete="postal-code" maxlength="12">
+              </div>
+              <div class="field">
+                <label for="s-city">Gemeente</label>
+                <input id="s-city" name="city" type="text" autocomplete="address-level2" maxlength="80">
+              </div>
+              <div class="field">
+                <label for="s-country">Land</label>
+                <input id="s-country" name="country" type="text" autocomplete="country-name" maxlength="60" value="België">
+              </div>
+            </div>
+          </div>
+
+            <!-- Spam trap: hidden from people, bots tend to fill it in. -->
+            <div class="hp" aria-hidden="true">
+              <label>Laat dit veld leeg <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+            </div>
+            <input type="hidden" name="started" value="">
+
+          <div class="field check">
+            <input id="s-privacy" name="privacy" type="checkbox" value="1" required>
+            <label for="s-privacy">Ik ga akkoord dat Creafluxe mijn gegevens gebruikt om deze bestelling te behandelen. Lees de <a href="privacy.html">privacyverklaring</a>.</label>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="submit">Bestelling doorsturen</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </div>
+          <p class="hint">Je betaalt nog niets. Je krijgt eerst een bevestiging met prijs en voorbeeld.</p>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <img src="assets/img/logo-wit.svg" alt="Creafluxe" width="180" height="80" loading="lazy">
+      <div class="footer-cols">
+        <div>
+          <p class="footer-label">Maken</p>
+          <p><a href="atelier.html">Atelier</a><br><a href="webshop.html">Webshop</a><br><a href="herinneringsdoos.html">Herinneringsdoos</a><br><a href="organizer-wand.html">Organizer-wand</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Weten</p>
+          <p><a href="materialen.html">Materialen</a><br><a href="ontwerpgids.html">Ontwerpgids</a><br><a href="privacy.html">Privacy</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Contact</p>
+          <p><a href="mailto:contact@creafluxe.be">contact@creafluxe.be</a><br><a href="https://www.instagram.com/creafluxe/" rel="noopener">Instagram</a><br><a href="https://www.facebook.com/profile.php?id=61586495937170" rel="noopener">Facebook</a></p>
+          <!-- TODO: adres of regio, telefoon en ondernemingsnummer (verplicht te vermelden) -->
+        </div>
+      </div>
+      <p class="footer-small">© <span id="year">2026</span> Creafluxe · Bring your design to life</p>
+    </div>
+  </footer>
+</body>
+</html>

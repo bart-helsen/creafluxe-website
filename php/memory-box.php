@@ -8,6 +8,12 @@ declare(strict_types=1);
 
 const MB_LIMITS = ['w' => [120, 340], 'd' => [100, 250], 'h' => [50, 150]];
 const MB_LIDS = ['lift' => 'Opliggend deksel', 'slide' => 'Schuifdeksel', 'hinge' => 'Scharnierdeksel'];
+// Where a sliding lid opens to / where the hinge sits, seen from the front of the box.
+const MB_SIDES = ['front', 'back', 'left', 'right'];
+const MB_SLIDE_TEXT = ['front' => 'de voorkant', 'back' => 'de achterkant', 'left' => 'links', 'right' => 'rechts'];
+const MB_HINGE_TEXT = ['front' => 'de voorkant', 'back' => 'de achterkant', 'left' => 'de linkerkant', 'right' => 'de rechterkant'];
+// How the customer's own picture is engraved: solid shapes (logo, drawing) or grey tones as fine dots (photo).
+const MB_ARTWORK_MODES = ['vector' => 'als tekening', 'photo' => 'als foto'];
 const MB_FEET = ['arch' => 'Pootjes', 'flat' => 'Vlakke onderkant'];
 const MB_BORDERS = ['vine' => 'Rank', 'hearts' => 'Hartjes', 'stars' => 'Sterren', 'dots' => 'Stippen',
     'scallop' => 'Golfrand', 'double' => 'Dubbele lijn', 'none' => 'Geen rand'];
@@ -60,11 +66,23 @@ function memoryBoxConfiguration(string $json): ?array
     if (!is_string($border) || !isset(MB_BORDERS[$border])) return null;
     if (!is_string($ornament) || !isset(MB_ORNAMENTS[$ornament])) return null;
 
+    // Only the sliding lid and the hinge have a side (the lift lid has none). Missing = the usual side.
+    $side = $o['lidSide'] ?? null;
+    if ($lid === 'lift') {
+        if ($side !== null) return null;
+    } else {
+        if ($side === null) $side = $lid === 'slide' ? 'front' : 'back';
+        if (!is_string($side) || !in_array($side, MB_SIDES, true)) return null;
+    }
+
     $dividers = mbFractions($o['dividers'] ?? []);
     $dividersY = mbFractions($o['dividersY'] ?? []);
     if ($dividers === null || $dividersY === null) return null;
-    // Compartments of at least 15 mm, like the generator (a sliding lid has 2 x 3 mm liners).
-    foreach ([[$dividers, $lid === 'slide' ? $inner['w'] - 6 : $inner['w']], [$dividersY, $inner['d']]] as [$fr, $size]) {
+    // Compartments of at least 15 mm, like the generator. A sliding lid has 2 x 3 mm liners inside the two walls
+    // next to the open side: the side walls (open to the front / back) or the front and back walls (left / right).
+    $linersW = $lid === 'slide' && ($side === 'front' || $side === 'back');
+    $linersD = $lid === 'slide' && ($side === 'left' || $side === 'right');
+    foreach ([[$dividers, $linersW ? $inner['w'] - 6 : $inner['w']], [$dividersY, $linersD ? $inner['d'] - 6 : $inner['d']]] as [$fr, $size]) {
         $edges = array_merge([0], array_map(fn($f) => $f * $size, $fr), [$size]);
         for ($i = 1; $i < count($edges); $i++) {
             if ($edges[$i] - $edges[$i - 1] - 3 < 15) return null;
@@ -87,6 +105,14 @@ function memoryBoxConfiguration(string $json): ?array
     // The real file name is filled in from the upload; here only "wants artwork".
     $artwork = !empty($o['artwork']) ? 'pending' : null;
     if ($photo !== null && $artwork !== null) return null;
+    // Without artwork there is no engraving mode; with artwork the usual one is a drawing.
+    $mode = $o['artworkMode'] ?? null;
+    if ($artwork === null) {
+        if ($mode !== null) return null;
+    } else {
+        if ($mode === null) $mode = 'vector';
+        if (!is_string($mode) || !isset(MB_ARTWORK_MODES[$mode])) return null;
+    }
 
     return [
         'product' => 'memory-box',
@@ -94,6 +120,7 @@ function memoryBoxConfiguration(string $json): ?array
         'quantity' => $qty,
         'options' => [
             'lid' => $lid,
+            'lidSide' => $lid === 'lift' ? null : $side,
             'inner' => $inner,
             'dividers' => $dividers,
             'dividersY' => $dividersY,
@@ -104,8 +131,18 @@ function memoryBoxConfiguration(string $json): ?array
             'date' => $date,
             'photoWindow' => $photo,
             'artwork' => $artwork,
+            'artworkMode' => $mode,
         ],
     ];
+}
+
+/** " (schuift open naar links)" / " (scharnier aan de achterkant)", empty for the lift lid. */
+function mbLidSideText(array $o): string
+{
+    $side = $o['lidSide'] ?? null;
+    if ($side === null) return '';
+    if ($o['lid'] === 'slide') return ' (schuift open naar ' . MB_SLIDE_TEXT[$side] . ')';
+    return ' (scharnier aan ' . MB_HINGE_TEXT[$side] . ')';
 }
 
 function mbCompartments(array $fr): string
@@ -122,7 +159,7 @@ function memoryBoxSummary(array $c): string
         'Product: Herinneringsdoos',
         'Aantal: ' . $c['quantity'],
         "Binnenmaat: {$o['inner']['w']} x {$o['inner']['d']} x {$o['inner']['h']} mm (b x d x h)",
-        'Deksel: ' . MB_LIDS[$o['lid']],
+        'Deksel: ' . MB_LIDS[$o['lid']] . mbLidSideText($o),
         'Vakken links-rechts: ' . mbCompartments($o['dividers']),
         'Vakken voor-achter: ' . mbCompartments($o['dividersY']),
         'Onderkant: ' . MB_FEET[$o['feet']],
@@ -132,6 +169,6 @@ function memoryBoxSummary(array $c): string
         'Datum: ' . ($o['date'] !== '' ? $o['date'] : '-'),
     ];
     if ($o['photoWindow']) $lines[] = "Fotovenster: {$o['photoWindow']['w']} x {$o['photoWindow']['h']} mm";
-    if ($o['artwork']) $lines[] = "Eigen tekening: {$o['artwork']} (in bijlage)";
+    if ($o['artwork']) $lines[] = "Eigen tekening: {$o['artwork']} (in bijlage), te graveren " . MB_ARTWORK_MODES[$o['artworkMode'] ?? 'vector'];
     return implode("\n", $lines);
 }

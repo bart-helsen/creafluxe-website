@@ -4,6 +4,9 @@
 // "configuration". The admin app stores it on the request, and the generator
 // in product-tools/memory-box reads exactly this shape (generate.py --config).
 // Keep the three in step: see creafluxe-admin/src/lib/product-config.ts.
+// "artworkMode": "vector" or "photo" (grey tones as fine dots) for the customer's own picture; null without artwork.
+// "lidSide": where a sliding lid opens to / where the hinge sits ("front", "back", "left" or
+// "right", seen from the front of the box); null for the lift lid.
 (function () {
   "use strict";
 
@@ -47,7 +50,19 @@
   // Narrowest compartment for n evenly spaced compartments over `size` mm.
   function compartmentWidth(size, n) { return size / n - T; }
 
-  function usableWidth(inner, lid) { return lid === "slide" ? inner.w - 2 * T : inner.w; }
+  // A sliding lid rides on two liners inside two opposite walls: the walls next to the open side
+  // (front / back: the side walls, so the width shrinks; left / right: the front and back walls, so the depth shrinks).
+  function slideAlongWidth(lid, side) { return lid === "slide" && (side === "front" || side === "back"); }
+  function slideAlongDepth(lid, side) { return lid === "slide" && (side === "left" || side === "right"); }
+  function usableWidth(inner, lid, side) { return slideAlongWidth(lid, side) ? inner.w - 2 * T : inner.w; }
+  function usableDepth(inner, lid, side) { return slideAlongDepth(lid, side) ? inner.d - 2 * T : inner.d; }
+
+  // Where the lid opens (sliding lid) or where the hinge sits (hinge); null for the lift lid.
+  function lidSide(lid) {
+    if (lid === "slide") return radio("slide-side") || "front";
+    if (lid === "hinge") return radio("hinge-side") || "back";
+    return null;
+  }
 
   function photoSize() {
     var p = $("c-photo").value.split("x").map(Number);
@@ -55,6 +70,10 @@
   }
 
   function photoFits(p, inner) { return p.w <= inner.w - PHOTO_MARGIN.w && p.h <= inner.d - PHOTO_MARGIN.d; }
+
+  // An SVG is drawn shapes, so it can only be engraved as a drawing.
+  function isSvg(file) { return !!file && /\.svgz?$/i.test(file.name); }
+  function artworkMode(file) { return isSvg(file) ? "vector" : radio("artwork-mode") || "vector"; }
 
   function readConfig() {
     var inner = innerSize();
@@ -68,6 +87,7 @@
       quantity: qty,
       options: {
         lid: lid,
+        lidSide: lidSide(lid),
         inner: inner,
         dividers: fractions(Number($("c-div-x").value)),
         dividersY: fractions(Number($("c-div-y").value)),
@@ -77,7 +97,9 @@
         name: $("c-name").value.trim(),
         date: $("c-date").value.trim(),
         photoWindow: motif === "photo" ? photoSize() : null,
-        artwork: motif === "artwork" && file ? file.name : null
+        artwork: motif === "artwork" && file ? file.name : null,
+        // How the artwork is engraved: "vector" = solid shapes (logo, drawing), "photo" = grey tones as fine dots.
+        artworkMode: motif === "artwork" && file ? artworkMode(file) : null
       }
     };
   }
@@ -88,6 +110,9 @@
     var inner = innerSize();
     var lid = radio("lid");
     $("custom-size").hidden = radio("size") !== "custom";
+    $("slide-side-field").hidden = lid !== "slide";
+    $("hinge-side-field").hidden = lid !== "hinge";
+    var side = lidSide(lid);
 
     // Photo window: lift lid only.
     var photoInput = form.querySelector('input[name="motif"][value="photo"]');
@@ -111,12 +136,18 @@
     var motif = radio("motif");
     $("ornament-field").hidden = motif !== "ornament";
     $("artwork-field").hidden = motif !== "artwork";
+    $("artwork-mode-field").hidden = motif !== "artwork";
+    var svgFile = isSvg($("c-artwork").files[0]);
+    var photoMode = form.querySelector('input[name="artwork-mode"][value="photo"]');
+    photoMode.disabled = svgFile;
+    if (svgFile) form.querySelector('input[name="artwork-mode"][value="vector"]').checked = true;
+    $("artwork-mode-photo-wrap").title = svgFile ? "Een SVG kan enkel als tekening" : "";
     $("photo-field").hidden = motif !== "photo";
     $("c-artwork").disabled = motif !== "artwork";   // only sent when chosen
 
     // Compartments that would be too narrow.
     var hint = [];
-    [["c-div-x", usableWidth(inner, lid)], ["c-div-y", inner.d]].forEach(function (pair) {
+    [["c-div-x", usableWidth(inner, lid, side)], ["c-div-y", usableDepth(inner, lid, side)]].forEach(function (pair) {
       var sel = $(pair[0]);
       Array.prototype.forEach.call(sel.options, function (o) {
         o.disabled = compartmentWidth(pair[1], Number(o.value)) < MIN_COMPARTMENT;
@@ -125,11 +156,12 @@
     });
     var nx = Number($("c-div-x").value), ny = Number($("c-div-y").value);
     if (nx * ny > 1) {
-      hint.push("Elk vak is binnenin ongeveer " + Math.floor(compartmentWidth(usableWidth(inner, lid), nx) + (nx === 1 ? T : 0)) +
-        " × " + Math.floor(compartmentWidth(inner.d, ny) + (ny === 1 ? T : 0)) + " mm.");
+      hint.push("Elk vak is binnenin ongeveer " + Math.floor(compartmentWidth(usableWidth(inner, lid, side), nx) + (nx === 1 ? T : 0)) +
+        " × " + Math.floor(compartmentWidth(usableDepth(inner, lid, side), ny) + (ny === 1 ? T : 0)) + " mm.");
       if (nx > 1 && ny > 1) hint.push("De tussenschotten worden in elkaar geschoven.");
     }
-    if (lid === "slide") hint.push("Bij een schuifdeksel is de doos binnenin 6 mm smaller (de geleiders).");
+    if (slideAlongWidth(lid, side)) hint.push("Bij een schuifdeksel is de doos binnenin 6 mm smaller (de geleiders).");
+    if (slideAlongDepth(lid, side)) hint.push("Bij een schuifdeksel is de doos binnenin 6 mm minder diep (de geleiders).");
     $("div-hint").textContent = hint.join(" ");
   }
 
@@ -220,21 +252,37 @@
     var o = c.options, inner = o.inner;
     var Wo = inner.w + 2 * T, Do = inner.d + 2 * T;
     var slide = o.lid === "slide";
+    var side = o.lidSide;
     var LW = slide ? Wo : Wo + 2 * LID_OVERHANG, LD = slide ? Do : Do + 2 * LID_OVERHANG;
     var k = Math.min(340 / LW, 230 / LD);                        // px per mm
-    var x = (400 - LW * k) / 2, y = (300 - LD * k) / 2 + (o.lid === "hinge" ? 6 : 0);
+    var x = (400 - LW * k) / 2, y = (300 - LD * k) / 2;
+    if (o.lid === "hinge") {                                     // make room for the knuckles on the hinge side
+      if (side === "back") y += 6; else if (side === "front") y -= 6;
+      else if (side === "left") x += 6; else if (side === "right") x -= 6;
+    }
     var engr;                                                    // engraving area in px
 
     if (o.lid === "hinge") {
       [0.12, 0.3, 0.7, 0.88].forEach(function (f, i) {
-        el("rect", { x: f1(x + LW * k * f - 7 * k), y: f1(y - 7 * k), width: f1(14 * k), height: f1(9 * k), class: i % 3 ? "wood" : "wood-dark" });
+        var cls = i % 3 ? "wood" : "wood-dark";
+        if (side === "back" || side === "front") {
+          var kx = x + LW * k * f - 7 * k;
+          el("rect", { x: f1(kx), y: f1(side === "back" ? y - 7 * k : y + LD * k - 2 * k), width: f1(14 * k), height: f1(9 * k), class: cls });
+        } else {
+          var ky = y + LD * k * f - 7 * k;
+          el("rect", { x: f1(side === "left" ? x - 7 * k : x + LW * k - 2 * k), y: f1(ky), width: f1(9 * k), height: f1(14 * k), class: cls });
+        }
       });
     }
     if (slide) {
+      // The U-shaped rail is closed on three sides; the lid slides out where it is open (with the finger notch).
       el("rect", { x: f1(x), y: f1(y), width: f1(LW * k), height: f1(LD * k), class: "wood-dark" });
       var rail = (T + RAIL_IN) * k;
-      el("rect", { x: f1(x + rail), y: f1(y + rail), width: f1(LW * k - 2 * rail), height: f1(LD * k - rail), class: "wood" });
-      engr = [x + rail + 8 * k, y + rail + 8 * k, x + LW * k - rail - 8 * k, y + LD * k - 10 * k];
+      var inL = side === "left" ? 0 : rail, inR = side === "right" ? 0 : rail;
+      var inT = side === "back" ? 0 : rail, inB = side === "front" ? 0 : rail;
+      el("rect", { x: f1(x + inL), y: f1(y + inT), width: f1(LW * k - inL - inR), height: f1(LD * k - inT - inB), class: "wood" });
+      engr = [x + inL + (side === "left" ? 10 : 8) * k, y + inT + (side === "back" ? 10 : 8) * k,
+              x + LW * k - inR - (side === "right" ? 10 : 8) * k, y + LD * k - inB - (side === "front" ? 10 : 8) * k];
     } else {
       el("rect", { x: f1(x), y: f1(y), width: f1(LW * k), height: f1(LD * k), rx: f1(LID_RADIUS * k), class: "wood" });
       engr = [x + BORDER_INSET * k, y + BORDER_INSET * k, x + (LW - BORDER_INSET) * k, y + (LD - BORDER_INSET) * k];
@@ -264,7 +312,7 @@
     } else if (o.artwork) {
       var box = [cx - maxW / 2, motifTop, maxW, Math.max(10, motifBottom - motifTop)];
       if (artworkUrl) {
-        el("image", { href: artworkUrl, x: f1(box[0]), y: f1(box[1]), width: f1(box[2]), height: f1(box[3]), preserveAspectRatio: "xMidYMid meet", style: "filter: grayscale(1) sepia(.6) contrast(1.4); mix-blend-mode: multiply" });
+        el("image", { href: artworkUrl, x: f1(box[0]), y: f1(box[1]), width: f1(box[2]), height: f1(box[3]), preserveAspectRatio: "xMidYMid meet", style: (o.artworkMode === "photo" ? "filter: grayscale(1) sepia(.5)" : "filter: grayscale(1) sepia(.6) contrast(1.4)") + "; mix-blend-mode: multiply" });
       } else {
         el("rect", { x: f1(box[0]), y: f1(box[1]), width: f1(box[2]), height: f1(box[3]), class: "engrave", "stroke-dasharray": "4 3" });
         var ta = el("text", { x: f1(cx), y: f1(box[1] + box[3] / 2 + 4), "text-anchor": "middle", class: "photo-hint" });
@@ -304,8 +352,8 @@
     var k = Math.min(320 / Wo, 220 / Do);
     var x = (400 - Wo * k) / 2 + 8, y = (300 - Do * k) / 2 - 8;
     el("rect", { x: f1(x), y: f1(y), width: f1(Wo * k), height: f1(Do * k), class: "wood-dark" });
-    var liner = o.lid === "slide" ? T : 0;
-    var ix = x + (T + liner) * k, iy = y + T * k, iw = (inner.w - 2 * liner) * k, ih = inner.d * k;
+    var linerX = slideAlongWidth(o.lid, o.lidSide) ? T : 0, linerY = slideAlongDepth(o.lid, o.lidSide) ? T : 0;
+    var ix = x + (T + linerX) * k, iy = y + (T + linerY) * k, iw = (inner.w - 2 * linerX) * k, ih = (inner.d - 2 * linerY) * k;
     el("rect", { x: f1(ix), y: f1(iy), width: f1(iw), height: f1(ih), class: "wood" });
     o.dividers.forEach(function (f) {
       el("rect", { x: f1(ix + iw * f - (T * k) / 2), y: f1(iy), width: f1(T * k), height: f1(ih), class: "wood-dark" });
@@ -317,16 +365,22 @@
     var by = y + Do * k + 16;
     el("line", { x1: f1(ix), y1: by, x2: f1(ix + iw), y2: by, class: "dim-line" });
     var tw = el("text", { x: f1(ix + iw / 2), y: by + 14, "text-anchor": "middle", class: "dim" });
-    tw.textContent = (inner.w - 2 * liner) + " mm";
+    tw.textContent = (inner.w - 2 * linerX) + " mm";
     var lx = x - 14;
     el("line", { x1: lx, y1: f1(iy), x2: lx, y2: f1(iy + ih), class: "dim-line" });
     var td = el("text", { x: lx - 4, y: f1(iy + ih / 2), "text-anchor": "middle", class: "dim", transform: "rotate(-90 " + (lx - 4) + " " + f1(iy + ih / 2) + ")" });
-    td.textContent = inner.d + " mm";
+    td.textContent = (inner.d - 2 * linerY) + " mm";
     var tf = el("text", { x: f1(x + (Wo * k) / 2), y: f1(y - 8), "text-anchor": "middle", class: "dim" });
     tf.textContent = "achterkant";
   }
 
   var LID_NAMES = { lift: "opliggend deksel", slide: "schuifdeksel", hinge: "scharnierdeksel" };
+  var SIDE_NAMES = { front: "de voorkant", back: "de achterkant", left: "links", right: "rechts" };
+  function lidText(o) {
+    if (o.lid === "slide") return LID_NAMES.slide + " (schuift open naar " + SIDE_NAMES[o.lidSide] + ")";
+    if (o.lid === "hinge") return LID_NAMES.hinge + " (scharnier " + (o.lidSide === "left" || o.lidSide === "right" ? "" : "aan ") + SIDE_NAMES[o.lidSide] + ")";
+    return LID_NAMES.lift;
+  }
 
   function render() {
     syncControls();
@@ -344,7 +398,7 @@
     var o = c.options, extra = o.lid === "slide" ? 6 : 14;
     var parts = o.dividers.length + 1 === 1 && o.dividersY.length + 1 === 1 ? "1 vak" : (o.dividers.length + 1) * (o.dividersY.length + 1) + " vakken";
     $("preview-desc").textContent = "Binnenmaat " + o.inner.w + " × " + o.inner.d + " × " + o.inner.h + " mm, buitenmaat ca. " +
-      (o.inner.w + extra) + " × " + (o.inner.d + extra) + " × " + (o.inner.h + 14) + " mm · " + LID_NAMES[o.lid] + " · " + parts + ".";
+      (o.inner.w + extra) + " × " + (o.inner.d + extra) + " × " + (o.inner.h + 14) + " mm · " + lidText(o) + " · " + parts + ".";
   }
 
   // ----------------------------------------------------------- events
@@ -440,7 +494,7 @@
       var cv = document.createElement("canvas");
       cv.width = W; cv.height = H;
       cv.getContext("2d").drawImage(img, 0, 0, W, H);
-      viewer.setLidCanvas(cv);
+      viewer.setLidCanvas(cv, c.options);
     };
     img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(new XMLSerializer().serializeToString(clone));
   }
@@ -448,7 +502,9 @@
   // Show what a choice does: open the lid when the lid type changes, look low for the feet.
   form.addEventListener("change", function (e) {
     if (!viewer || view !== "3d") return;
-    if (e.target.name === "lid") { viewer.lookLow(false); viewer.setOpen(true); syncLidButton(); }
+    if (e.target.name === "lid" || e.target.name === "slide-side" || e.target.name === "hinge-side") {
+      viewer.lookLow(false); viewer.setOpen(true); syncLidButton();
+    }
     if (e.target.name === "feet") { viewer.setOpen(false); viewer.lookLow(true); syncLidButton(); }
   });
   function syncLidButton() { $("lid-toggle").textContent = viewer && viewer.isOpen() ? "Sluit deksel" : "Open deksel"; }
@@ -545,12 +601,12 @@
           setStatus("Bedankt! Je aanvraag is verstuurd. Je krijgt zo dadelijk een bevestiging per e-mail, en binnen twee werkdagen een prijs.", "success");
         } else {
           submitBtn.disabled = false;
-          setStatus(data.error || "Versturen is niet gelukt. Probeer het opnieuw of mail naar offerte@creafluxe.be.", "error");
+          setStatus(data.error || "Versturen is niet gelukt. Probeer het opnieuw of mail naar offer@creafluxe.be.", "error");
         }
       })
       .catch(function () {
         submitBtn.disabled = false;
-        setStatus("Geen verbinding. Controleer je internet en probeer het opnieuw, of mail naar offerte@creafluxe.be.", "error");
+        setStatus("Geen verbinding. Controleer je internet en probeer het opnieuw, of mail naar offer@creafluxe.be.", "error");
       });
   });
 })();

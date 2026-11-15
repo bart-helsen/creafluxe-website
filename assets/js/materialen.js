@@ -121,7 +121,7 @@
     text.textContent = m.text || "";
     text.hidden = !m.text;
     document.getElementById("mat-dialog-cta").href =
-      "./?materiaal=" + encodeURIComponent(m.name) + "#aanvraag";
+      "atelier.html?materiaal=" + encodeURIComponent(m.name) + "#aanvraag";
 
     var wrap = document.getElementById("mat-dialog-ops");
     wrap.textContent = "";
@@ -221,7 +221,7 @@
     statusEl.textContent = "";
     statusEl.appendChild(document.createTextNode(message + " "));
     var a = el("a", null, "Start met je idee");
-    a.href = "./#aanvraag";
+    a.href = "atelier.html#aanvraag";
     statusEl.appendChild(a);
     statusEl.appendChild(document.createTextNode(" en ik adviseer je graag een materiaal."));
   }

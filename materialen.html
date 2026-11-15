@@ -1,19 +1,21 @@
 <!doctype html>
+<!-- Gegenereerd uit src/pages/materialen.html. Pas dat bestand aan en draai: python tools/build.py -->
 <html lang="nl-BE">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Materialen en stalen · Creafluxe</title>
-  <meta name="description" content="Zie hoe elk materiaal eruitziet onbewerkt, gegraveerd, gescoord en gesneden. Echte stalen van 10 × 10 cm, gemaakt in het atelier van Creafluxe.">
+  <title>Materialen en technieken · Creafluxe</title>
+  <meta name="description" content="Welke materialen Creafluxe snijdt en graveert, hoe snijden, lijngraveren, vlakgraveren en fotograveren eruitzien, en echte stalen van elk materiaal.">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=5">
-  <meta property="og:title" content="Materialen en stalen · Creafluxe">
-  <meta property="og:description" content="Echte stalen per materiaal: onbewerkt, gegraveerd, gescoord en gesneden.">
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+  <meta property="og:title" content="Materialen en technieken · Creafluxe">
+  <meta property="og:description" content="Welke materialen Creafluxe snijdt en graveert, hoe snijden, lijngraveren, vlakgraveren en fotograveren eruitzien, en echte stalen van elk materiaal.">
   <meta property="og:type" content="website">
-  <script defer src="assets/js/main.js"></script>
-  <script defer src="assets/js/materialen.js?v=2"></script>
+  <script>document.documentElement.classList.add("js");</script>
+  <script defer src="assets/js/main.js?v=6"></script>
+  <script defer src="assets/js/materialen.js?v=6"></script>
 </head>
 <body>
   <a class="skip" href="#main">Naar de inhoud</a>
@@ -28,23 +30,132 @@
         <span class="sr-only">Menu</span>
       </button>
       <nav id="site-nav" class="site-nav" aria-label="Hoofdmenu">
-        <a href="./#werkwijze">Werkwijze</a>
-        <a href="./#realisaties">Realisaties</a>
-        <a href="./#technieken">Technieken</a>
+        <a href="atelier.html">Atelier</a>
+        <a href="webshop.html">Webshop</a>
         <a href="materialen.html" aria-current="page">Materialen</a>
-        <a href="./#over">Over mij</a>
-        <a class="btn btn-small" href="./#aanvraag">Start met je idee</a>
+        <a href="ontwerpgids.html">Ontwerpgids</a>
+        <a class="btn btn-small" href="atelier.html#aanvraag">Vraag een offerte</a>
       </nav>
     </div>
   </header>
 
-  <main id="main">
+<main id="main">
+    <section class="page-head">
+      <div class="container">
+        <p class="eyebrow">Materialen en technieken</p>
+        <h1>Wat kan de laser, en op welk materiaal?</h1>
+        <p class="lead">Dezelfde laser snijdt, tekent lijnen, vult vlakken en graveert foto's. Hieronder zie je wat elke techniek doet, welke materialen ik verwerk en hoe het resultaat er op echte stalen uitziet.</p>
+        <div class="btn-row">
+          <a class="btn" href="#stalen">Bekijk de stalen</a>
+          <a class="btn btn-ghost" href="#overzicht">Overzicht per materiaal</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Techniques -->
     <section class="section">
       <div class="container">
         <header class="section-head">
-          <p class="eyebrow">Materialen</p>
-          <h1 class="page-title">Zie hoe jouw materiaal eruitziet</h1>
-          <p class="section-intro">Elk staal is 10 × 10 cm en gemaakt in mijn atelier, met dezelfde tekening op elk materiaal. Zo vergelijk je rechtstreeks hoe de laser het materiaal onbewerkt, gegraveerd, gescoord en gesneden laat zien.</p>
+          <p class="eyebrow">Technieken</p>
+          <h2>Vier bewerkingen, één machine</h2>
+          <p class="section-intro">In één stuk kun je ze combineren: een naambord wordt uitgesneden, de naam gegraveerd en de rand met een fijne lijn afgewerkt.</p>
+        </header>
+<ul class="techniques">
+  <li class="technique reveal" style="--d:0">
+    <svg class="technique-demo demo" viewBox="0 0 200 150" role="img" aria-label="Tekening: de laser snijdt een vorm uit een plaat en het stuk komt los">
+      <rect class="plate" x="20" y="20" width="160" height="110"/>
+      <path class="hole appear" d="M62 48 H128 L148 75 L128 102 H62 Z"/>
+      <path class="line draw" pathLength="1" d="M62 48 H128 L148 75 L128 102 H62 Z"/>
+      <path class="piece piece-drop" d="M62 48 H128 L148 75 L128 102 H62 Z"/>
+      <circle class="head head-follow" r="3.5" style="offset-path:path('M62 48 H128 L148 75 L128 102 H62 Z')"/>
+    </svg>
+    <div class="technique-body">
+      <p class="tag">Snijden</p>
+      <h3>Helemaal erdoor</h3>
+      <p>De laser gaat door het materiaal. Voor losse vormen, letters, bouwpakketten en puzzels.</p>
+    </div>
+  </li>
+  <li class="technique reveal" style="--d:1">
+    <svg class="technique-demo demo" viewBox="0 0 200 150" role="img" aria-label="Tekening: de laser trekt een fijne lijn in het oppervlak">
+      <rect class="plate" x="20" y="20" width="160" height="110"/>
+      <path class="line line-light draw" pathLength="1" d="M100 110 C56 84 54 50 80 48 C93 47 100 58 100 66 C100 58 107 47 120 48 C146 50 144 84 100 110"/>
+      <path class="line line-light draw draw-2" pathLength="1" stroke-dasharray="4 4" d="M36 122 H164"/>
+      <circle class="head head-follow" r="3.5" style="offset-path:path('M100 110 C56 84 54 50 80 48 C93 47 100 58 100 66 C100 58 107 47 120 48 C146 50 144 84 100 110')"/>
+    </svg>
+    <div class="technique-body">
+      <p class="tag">Lijngraveren</p>
+      <h3>Een fijne streep</h3>
+      <p>De laser volgt een lijn zonder door te snijden. Voor contouren, lijntekeningen en plooilijnen.</p>
+    </div>
+  </li>
+  <li class="technique reveal" style="--d:2">
+    <svg class="technique-demo demo" viewBox="0 0 200 150" role="img" aria-label="Tekening: de laser brandt lijn per lijn een gevuld vlak in het oppervlak">
+      <rect class="plate" x="20" y="20" width="160" height="110"/>
+      <path class="fill" d="M58 104 V46 H82 L100 78 L118 46 H142 V104 H124 V72 L106 104 H94 L76 72 V104 Z"/>
+      <rect class="cover" x="50" y="40" width="100" height="70"/>
+      <rect class="head scan" x="46" y="39" width="108" height="2" style="--scan:70px"/>
+    </svg>
+    <div class="technique-body">
+      <p class="tag">Vlakgraveren</p>
+      <h3>Gevulde vormen</h3>
+      <p>Lijn per lijn brandt de laser een vlak in het oppervlak. Voor tekst, logo's en gevulde tekeningen.</p>
+    </div>
+  </li>
+  <li class="technique reveal" style="--d:3">
+    <svg class="technique-demo demo" viewBox="0 0 200 150" role="img" aria-label="Tekening: een foto opgebouwd uit fijne puntjes van verschillende grootte">
+      <rect class="plate" x="20" y="20" width="160" height="110"/>
+      <circle class="dot" style="--n:0" cx="32.0" cy="32.0" r="1.03"/><circle class="dot" style="--n:1" cx="41.7" cy="32.0" r="1.03"/><circle class="dot" style="--n:2" cx="51.4" cy="32.0" r="1.03"/><circle class="dot" style="--n:3" cx="61.1" cy="32.0" r="1.03"/><circle class="dot" style="--n:4" cx="70.8" cy="32.0" r="1.03"/><circle class="dot" style="--n:5" cx="80.5" cy="32.0" r="2.47"/><circle class="dot" style="--n:6" cx="90.2" cy="32.0" r="2.5"/><circle class="dot" style="--n:7" cx="99.9" cy="32.0" r="2.68"/><circle class="dot" style="--n:8" cx="109.6" cy="32.0" r="2.97"/><circle class="dot" style="--n:9" cx="119.3" cy="32.0" r="3.31"/><circle class="dot" style="--n:10" cx="129.0" cy="32.0" r="1.03"/><circle class="dot" style="--n:11" cx="138.7" cy="32.0" r="1.03"/><circle class="dot" style="--n:12" cx="148.4" cy="32.0" r="1.03"/><circle class="dot" style="--n:13" cx="158.1" cy="32.0" r="1.03"/><circle class="dot" style="--n:14" cx="167.8" cy="32.0" r="1.03"/><circle class="dot" style="--n:15" cx="32.0" cy="41.6" r="1.12"/><circle class="dot" style="--n:16" cx="41.7" cy="41.6" r="1.12"/><circle class="dot" style="--n:17" cx="51.4" cy="41.6" r="1.12"/><circle class="dot" style="--n:18" cx="61.1" cy="41.6" r="1.12"/><circle class="dot" style="--n:19" cx="70.8" cy="41.6" r="2.29"/><circle class="dot" style="--n:20" cx="80.5" cy="41.6" r="2.06"/><circle class="dot" style="--n:21" cx="90.2" cy="41.6" r="2.1"/><circle class="dot" style="--n:22" cx="99.9" cy="41.6" r="2.38"/><circle class="dot" style="--n:23" cx="109.6" cy="41.6" r="2.74"/><circle class="dot" style="--n:24" cx="119.3" cy="41.6" r="3.13"/><circle class="dot" style="--n:25" cx="129.0" cy="41.6" r="3.53"/><circle class="dot" style="--n:26" cx="138.7" cy="41.6" r="1.12"/><circle class="dot" style="--n:27" cx="148.4" cy="41.6" r="1.12"/><circle class="dot" style="--n:28" cx="158.1" cy="41.6" r="1.12"/><circle class="dot" style="--n:29" cx="167.8" cy="41.6" r="1.12"/><circle class="dot" style="--n:30" cx="32.0" cy="51.2" r="1.21"/><circle class="dot" style="--n:31" cx="41.7" cy="51.2" r="1.21"/><circle class="dot" style="--n:32" cx="51.4" cy="51.2" r="1.21"/><circle class="dot" style="--n:33" cx="61.1" cy="51.2" r="2.5"/><circle class="dot" style="--n:34" cx="70.8" cy="51.2" r="2.09"/><circle class="dot" style="--n:35" cx="80.5" cy="51.2" r="1.7"/><circle class="dot" style="--n:36" cx="90.2" cy="51.2" r="1.8"/><circle class="dot" style="--n:37" cx="99.9" cy="51.2" r="2.2"/><circle class="dot" style="--n:38" cx="109.6" cy="51.2" r="2.62"/><circle class="dot" style="--n:39" cx="119.3" cy="51.2" r="3.04"/><circle class="dot" style="--n:40" cx="129.0" cy="51.2" r="3.46"/><circle class="dot" style="--n:41" cx="138.7" cy="51.2" r="3.89"/><circle class="dot" style="--n:42" cx="148.4" cy="51.2" r="1.21"/><circle class="dot" style="--n:43" cx="158.1" cy="51.2" r="1.21"/><circle class="dot" style="--n:44" cx="167.8" cy="51.2" r="1.21"/><circle class="dot" style="--n:45" cx="32.0" cy="60.8" r="1.3"/><circle class="dot" style="--n:46" cx="41.7" cy="60.8" r="1.3"/><circle class="dot" style="--n:47" cx="51.4" cy="60.8" r="1.3"/><circle class="dot" style="--n:48" cx="61.1" cy="60.8" r="2.54"/><circle class="dot" style="--n:49" cx="70.8" cy="60.8" r="2.15"/><circle class="dot" style="--n:50" cx="80.5" cy="60.8" r="1.83"/><circle class="dot" style="--n:51" cx="90.2" cy="60.8" r="1.9"/><circle class="dot" style="--n:52" cx="99.9" cy="60.8" r="2.25"/><circle class="dot" style="--n:53" cx="109.6" cy="60.8" r="2.65"/><circle class="dot" style="--n:54" cx="119.3" cy="60.8" r="3.07"/><circle class="dot" style="--n:55" cx="129.0" cy="60.8" r="3.48"/><circle class="dot" style="--n:56" cx="138.7" cy="60.8" r="3.9"/><circle class="dot" style="--n:57" cx="148.4" cy="60.8" r="1.3"/><circle class="dot" style="--n:58" cx="158.1" cy="60.8" r="1.3"/><circle class="dot" style="--n:59" cx="167.8" cy="60.8" r="1.3"/><circle class="dot" style="--n:60" cx="32.0" cy="70.4" r="1.39"/><circle class="dot" style="--n:61" cx="41.7" cy="70.4" r="1.39"/><circle class="dot" style="--n:62" cx="51.4" cy="70.4" r="1.39"/><circle class="dot" style="--n:63" cx="61.1" cy="70.4" r="2.73"/><circle class="dot" style="--n:64" cx="70.8" cy="70.4" r="2.42"/><circle class="dot" style="--n:65" cx="80.5" cy="70.4" r="2.23"/><circle class="dot" style="--n:66" cx="90.2" cy="70.4" r="2.26"/><circle class="dot" style="--n:67" cx="99.9" cy="70.4" r="2.49"/><circle class="dot" style="--n:68" cx="109.6" cy="70.4" r="2.82"/><circle class="dot" style="--n:69" cx="119.3" cy="70.4" r="3.2"/><circle class="dot" style="--n:70" cx="129.0" cy="70.4" r="3.59"/><circle class="dot" style="--n:71" cx="138.7" cy="70.4" r="3.99"/><circle class="dot" style="--n:72" cx="148.4" cy="70.4" r="1.39"/><circle class="dot" style="--n:73" cx="158.1" cy="70.4" r="1.39"/><circle class="dot" style="--n:74" cx="167.8" cy="70.4" r="1.39"/><circle class="dot" style="--n:75" cx="32.0" cy="80.0" r="1.48"/><circle class="dot" style="--n:76" cx="41.7" cy="80.0" r="1.48"/><circle class="dot" style="--n:77" cx="51.4" cy="80.0" r="1.48"/><circle class="dot" style="--n:78" cx="61.1" cy="80.0" r="3.01"/><circle class="dot" style="--n:79" cx="70.8" cy="80.0" r="2.77"/><circle class="dot" style="--n:80" cx="80.5" cy="80.0" r="2.64"/><circle class="dot" style="--n:81" cx="90.2" cy="80.0" r="2.66"/><circle class="dot" style="--n:82" cx="99.9" cy="80.0" r="2.83"/><circle class="dot" style="--n:83" cx="109.6" cy="80.0" r="3.09"/><circle class="dot" style="--n:84" cx="119.3" cy="80.0" r="3.41"/><circle class="dot" style="--n:85" cx="129.0" cy="80.0" r="3.76"/><circle class="dot" style="--n:86" cx="138.7" cy="80.0" r="4.14"/><circle class="dot" style="--n:87" cx="148.4" cy="80.0" r="1.48"/><circle class="dot" style="--n:88" cx="158.1" cy="80.0" r="1.48"/><circle class="dot" style="--n:89" cx="167.8" cy="80.0" r="1.48"/><circle class="dot" style="--n:90" cx="32.0" cy="89.6" r="1.57"/><circle class="dot" style="--n:91" cx="41.7" cy="89.6" r="1.57"/><circle class="dot" style="--n:92" cx="51.4" cy="89.6" r="1.57"/><circle class="dot" style="--n:93" cx="61.1" cy="89.6" r="3.34"/><circle class="dot" style="--n:94" cx="70.8" cy="89.6" r="3.15"/><circle class="dot" style="--n:95" cx="80.5" cy="89.6" r="3.06"/><circle class="dot" style="--n:96" cx="90.2" cy="89.6" r="3.07"/><circle class="dot" style="--n:97" cx="99.9" cy="89.6" r="3.2"/><circle class="dot" style="--n:98" cx="109.6" cy="89.6" r="3.41"/><circle class="dot" style="--n:99" cx="119.3" cy="89.6" r="3.68"/><circle class="dot" style="--n:100" cx="129.0" cy="89.6" r="4.0"/><circle class="dot" style="--n:101" cx="138.7" cy="89.6" r="4.2"/><circle class="dot" style="--n:102" cx="148.4" cy="89.6" r="1.57"/><circle class="dot" style="--n:103" cx="158.1" cy="89.6" r="1.57"/><circle class="dot" style="--n:104" cx="167.8" cy="89.6" r="1.57"/><circle class="dot" style="--n:105" cx="32.0" cy="99.2" r="1.66"/><circle class="dot" style="--n:106" cx="41.7" cy="99.2" r="1.66"/><circle class="dot" style="--n:107" cx="51.4" cy="99.2" r="1.66"/><circle class="dot" style="--n:108" cx="61.1" cy="99.2" r="1.66"/><circle class="dot" style="--n:109" cx="70.8" cy="99.2" r="3.55"/><circle class="dot" style="--n:110" cx="80.5" cy="99.2" r="3.47"/><circle class="dot" style="--n:111" cx="90.2" cy="99.2" r="3.49"/><circle class="dot" style="--n:112" cx="99.9" cy="99.2" r="3.59"/><circle class="dot" style="--n:113" cx="109.6" cy="99.2" r="3.76"/><circle class="dot" style="--n:114" cx="119.3" cy="99.2" r="4.0"/><circle class="dot" style="--n:115" cx="129.0" cy="99.2" r="4.2"/><circle class="dot" style="--n:116" cx="138.7" cy="99.2" r="1.66"/><circle class="dot" style="--n:117" cx="148.4" cy="99.2" r="1.66"/><circle class="dot" style="--n:118" cx="158.1" cy="99.2" r="1.66"/><circle class="dot" style="--n:119" cx="167.8" cy="99.2" r="1.66"/><circle class="dot" style="--n:120" cx="32.0" cy="108.8" r="1.75"/><circle class="dot" style="--n:121" cx="41.7" cy="108.8" r="1.75"/><circle class="dot" style="--n:122" cx="51.4" cy="108.8" r="1.75"/><circle class="dot" style="--n:123" cx="61.1" cy="108.8" r="1.75"/><circle class="dot" style="--n:124" cx="70.8" cy="108.8" r="1.75"/><circle class="dot" style="--n:125" cx="80.5" cy="108.8" r="3.89"/><circle class="dot" style="--n:126" cx="90.2" cy="108.8" r="3.9"/><circle class="dot" style="--n:127" cx="99.9" cy="108.8" r="3.98"/><circle class="dot" style="--n:128" cx="109.6" cy="108.8" r="4.13"/><circle class="dot" style="--n:129" cx="119.3" cy="108.8" r="4.2"/><circle class="dot" style="--n:130" cx="129.0" cy="108.8" r="1.75"/><circle class="dot" style="--n:131" cx="138.7" cy="108.8" r="1.75"/><circle class="dot" style="--n:132" cx="148.4" cy="108.8" r="1.75"/><circle class="dot" style="--n:133" cx="158.1" cy="108.8" r="1.75"/><circle class="dot" style="--n:134" cx="167.8" cy="108.8" r="1.75"/><circle class="dot" style="--n:135" cx="32.0" cy="118.4" r="1.84"/><circle class="dot" style="--n:136" cx="41.7" cy="118.4" r="1.84"/><circle class="dot" style="--n:137" cx="51.4" cy="118.4" r="1.84"/><circle class="dot" style="--n:138" cx="61.1" cy="118.4" r="1.84"/><circle class="dot" style="--n:139" cx="70.8" cy="118.4" r="1.84"/><circle class="dot" style="--n:140" cx="80.5" cy="118.4" r="1.84"/><circle class="dot" style="--n:141" cx="90.2" cy="118.4" r="1.84"/><circle class="dot" style="--n:142" cx="99.9" cy="118.4" r="1.84"/><circle class="dot" style="--n:143" cx="109.6" cy="118.4" r="1.84"/><circle class="dot" style="--n:144" cx="119.3" cy="118.4" r="1.84"/><circle class="dot" style="--n:145" cx="129.0" cy="118.4" r="1.84"/><circle class="dot" style="--n:146" cx="138.7" cy="118.4" r="1.84"/><circle class="dot" style="--n:147" cx="148.4" cy="118.4" r="1.84"/><circle class="dot" style="--n:148" cx="158.1" cy="118.4" r="1.84"/><circle class="dot" style="--n:149" cx="167.8" cy="118.4" r="1.84"/>
+    </svg>
+    <div class="technique-body">
+      <p class="tag">Fotograveren</p>
+      <h3>Grijstinten in puntjes</h3>
+      <p>Een foto wordt duizenden fijne puntjes, groot waar het donker is. Voor portretten op hout of leisteen.</p>
+    </div>
+  </li>
+</ul>
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section id="overzicht" class="section band-alt">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Overzicht</p>
+          <h2>Materialen waar ik mee werk</h2>
+        </header>
+        <div class="table-wrap reveal">
+          <table class="materials">
+            <thead>
+              <tr><th scope="col">Materiaal</th><th scope="col">Snijden</th><th scope="col">Graveren</th><th scope="col">Goed voor</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Hout en multiplex</th><td><span class="yes">Ja</span></td><td><span class="yes">Ja</span></td><td>Bordjes, doosjes, decoratie, puzzels</td></tr>
+              <tr><th scope="row">MDF</th><td><span class="yes">Ja</span></td><td><span class="yes">Ja</span></td><td>Bouwpakketten, organizers, prototypes</td></tr>
+              <tr><th scope="row">Acryl (plexiglas)</th><td><span class="yes">Ja</span>, tot 20 mm</td><td><span class="yes">Ja</span></td><td>Naamborden, taarttoppers, displays, logo's</td></tr>
+              <tr><th scope="row">Leder</th><td><span class="yes">Ja</span></td><td><span class="yes">Ja</span></td><td>Sleutelhangers, labels, patches</td></tr>
+              <tr><th scope="row">Karton en papier</th><td><span class="yes">Ja</span></td><td><span class="yes">Ja</span></td><td>Uitnodigingen, verpakking, maquettes</td></tr>
+              <tr><th scope="row">Glas, steen en keramiek</th><td><span class="no">Nee</span></td><td><span class="yes">Ja</span></td><td>Glazen, leisteen onderzetters, tegels</td></tr>
+              <tr><th scope="row">Gecoat metaal</th><td><span class="no">Nee</span></td><td><span class="yes">Ja</span></td><td>Drinkflessen, pennen, plaatjes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="caption note">Staat je materiaal er niet bij, of breng je het liever zelf mee? Vraag het gerust. PVC en vinyl verwerk ik niet: die geven schadelijke dampen.</p>
+
+        <dl class="facts facts-3 section-foot">
+          <div><dt>Machine</dt><dd>55 W<small>CO₂-laser (xTool P2S) met camera om precies te positioneren</small></dd></div>
+          <div><dt>Werkvlak</dt><dd>600 × 305 mm<small>per plaat. Langere stukken schuiven door de machine, grotere ontwerpen verdeel ik over meerdere platen.</small></dd></div>
+          <div><dt>Dikte</dt><dd>tot 20 mm<small>in acryl. Hout en MDF snijd ik vaak in 3 mm; andere diktes op aanvraag.</small></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Samples from the admin app -->
+    <section id="stalen" class="section">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Stalen</p>
+          <h2>Zie hoe jouw materiaal eruitziet</h2>
+          <p class="section-intro">Elk staal is 10 × 10 cm en gemaakt in mijn atelier, met dezelfde tekening op elk materiaal. Zo vergelijk je rechtstreeks hoe het er onbewerkt, gegraveerd, gescoord en gesneden uitziet. Klik op een materiaal voor alle foto's.</p>
         </header>
 
         <div id="mat-filters" class="mat-filters" role="group" aria-label="Filter op soort materiaal" hidden></div>
@@ -52,16 +163,16 @@
         <div id="mat-grid" class="mat-grid"></div>
 
         <noscript>
-          <p class="mat-status">Voor het tonen van de stalen is JavaScript nodig. Mail me gerust op <a href="mailto:offerte@creafluxe.be">offerte@creafluxe.be</a>, dan stuur ik foto's door.</p>
+          <p class="mat-status">Voor het tonen van de stalen is JavaScript nodig. Mail me gerust op <a href="mailto:offer@creafluxe.be">offer@creafluxe.be</a>, dan stuur ik foto's door.</p>
         </noscript>
 
-        <div class="configurator-teaser">
+        <div class="teaser section-foot">
           <div>
             <p class="eyebrow">Twijfel je?</p>
-            <h2 class="teaser-title">Niet zeker welk materiaal bij je idee past?</h2>
+            <h2>Niet zeker welk materiaal bij je idee past?</h2>
             <p>Vertel me wat je wil maken. Ik adviseer een materiaal en maak graag eerst een proefstuk.</p>
           </div>
-          <a class="btn" href="./#aanvraag">Start met je idee</a>
+          <a class="btn" href="atelier.html#aanvraag">Start met je idee</a>
         </div>
       </div>
     </section>
@@ -75,7 +186,7 @@
       <p id="mat-dialog-text" class="section-intro"></p>
       <div id="mat-dialog-ops" class="mat-ops"></div>
       <div class="mat-dialog-foot">
-        <a id="mat-dialog-cta" class="btn" href="./#aanvraag">Vraag een offerte met dit materiaal</a>
+        <a id="mat-dialog-cta" class="btn" href="atelier.html#aanvraag">Vraag een offerte met dit materiaal</a>
         <p class="caption">Stalen van 10 × 10 cm. Kleuren kunnen op je scherm licht afwijken.</p>
       </div>
     </div>
@@ -96,12 +207,17 @@
       <img src="assets/img/logo-wit.svg" alt="Creafluxe" width="180" height="80" loading="lazy">
       <div class="footer-cols">
         <div>
-          <p class="footer-label">Contact</p>
-          <p><a href="mailto:offerte@creafluxe.be">offerte@creafluxe.be</a></p>
+          <p class="footer-label">Maken</p>
+          <p><a href="atelier.html">Atelier</a><br><a href="webshop.html">Webshop</a><br><a href="herinneringsdoos.html">Herinneringsdoos</a><br><a href="organizer-wand.html">Organizer-wand</a></p>
         </div>
         <div>
-          <p class="footer-label">Pagina's</p>
-          <p><a href="./#werkwijze">Werkwijze</a><br><a href="./#realisaties">Realisaties</a><br><a href="materialen.html">Materialen</a><br><a href="privacy.html">Privacy</a></p>
+          <p class="footer-label">Weten</p>
+          <p><a href="materialen.html">Materialen</a><br><a href="ontwerpgids.html">Ontwerpgids</a><br><a href="privacy.html">Privacy</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Contact</p>
+          <p><a href="mailto:contact@creafluxe.be">contact@creafluxe.be</a><br><a href="https://www.instagram.com/creafluxe/" rel="noopener">Instagram</a><br><a href="https://www.facebook.com/profile.php?id=61586495937170" rel="noopener">Facebook</a></p>
+          <!-- TODO: adres of regio, telefoon en ondernemingsnummer (verplicht te vermelden) -->
         </div>
       </div>
       <p class="footer-small">© <span id="year">2026</span> Creafluxe · Bring your design to life</p>

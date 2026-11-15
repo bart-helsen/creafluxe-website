@@ -13,7 +13,10 @@ return [
     'admin_url' => 'https://admin.creafluxe.be',
 
     // Where new requests go, and the sender address (must be a mailbox on your own domain).
-    'notify_to' => 'offerte@creafluxe.be',
+    // Every request mail carries an aanvraag.json attachment the admin app can read.
+    // If the admin app picks requests up from this mailbox, leave intake_key empty,
+    // otherwise each request arrives twice (once by mail, once through the intake).
+    'notify_to' => 'offer@creafluxe.be',
     'mail_from' => 'noreply@creafluxe.be',
 
     // Sites allowed to post the form.

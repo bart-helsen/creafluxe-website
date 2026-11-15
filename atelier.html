@@ -1,0 +1,244 @@
+<!doctype html>
+<!-- Gegenereerd uit src/pages/atelier.html. Pas dat bestand aan en draai: python tools/build.py -->
+<html lang="nl-BE">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier · Vraag een offerte · Creafluxe</title>
+  <meta name="description" content="Kom met je idee, schets of afgewerkt ontwerp. Laad je bestanden op en vraag een gratis, vrijblijvende offerte voor lasersnijden of graveren op maat.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+  <meta property="og:title" content="Atelier · Vraag een offerte · Creafluxe">
+  <meta property="og:description" content="Kom met je idee, schets of afgewerkt ontwerp. Laad je bestanden op en vraag een gratis, vrijblijvende offerte voor lasersnijden of graveren op maat.">
+  <meta property="og:type" content="website">
+  <script>document.documentElement.classList.add("js");</script>
+  <script defer src="assets/js/main.js?v=6"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./" aria-label="Creafluxe, naar de startpagina">
+        <img src="assets/img/logo.svg" alt="Creafluxe" width="212" height="94">
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Hoofdmenu">
+        <a href="atelier.html" aria-current="page">Atelier</a>
+        <a href="webshop.html">Webshop</a>
+        <a href="materialen.html">Materialen</a>
+        <a href="ontwerpgids.html">Ontwerpgids</a>
+        <a class="btn btn-small" href="atelier.html#aanvraag">Vraag een offerte</a>
+      </nav>
+    </div>
+  </header>
+
+<main id="main">
+    <section class="page-head">
+      <div class="container">
+        <p class="eyebrow">Atelier</p>
+        <h1>Jouw idee, uitgewerkt tot een stuk dat klopt</h1>
+        <p class="lead">Of je nu een vaag idee hebt of een afgewerkt bestand: in het atelier maken we er samen iets van. Je krijgt eerst een voorstel met een richtprijs. Pas als je akkoord gaat, start ik.</p>
+        <div class="btn-row">
+          <a class="btn" href="#aanvraag">Vraag een offerte</a>
+          <a class="btn btn-ghost" href="ontwerpgids.html">Hoe maak ik een bestand?</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Where are you in the process -->
+    <section class="section">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Waar sta je?</p>
+          <h2>Ik stap in waar jij me nodig hebt</h2>
+        </header>
+        <ol class="steps">
+          <li class="step reveal" style="--d:0">
+            <span class="step-label">Verfijnen</span>
+            <h3>Je idee is nog niet scherp</h3>
+            <p>Je weet wat het moet worden, maar niet hoe. We bespreken wat het moet doen, hoe groot het wordt en welk materiaal past.</p>
+          </li>
+          <li class="step reveal" style="--d:1">
+            <span class="step-label">Uittekenen</span>
+            <h3>Je hebt een schets of foto</h3>
+            <p>Ik teken het uit tot een bestand voor de laser en stuur je een voorbeeld. Telt de pasvorm, dan maak ik eerst een proefstuk.</p>
+          </li>
+          <li class="step reveal" style="--d:2">
+            <span class="step-label">Maken</span>
+            <h3>Je ontwerp is klaar</h3>
+            <p>Laad je bestand op. Ik kijk het na, laat weten als er iets beter kan en snijd of graveer het in het materiaal dat je kiest.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Request -->
+    <section id="aanvraag" class="section band-alt">
+      <div class="container split">
+        <div class="split-aside">
+          <p class="eyebrow">Offerte</p>
+          <h2>Vertel me wat je in gedachten hebt</h2>
+          <p>De eerste offerte is gratis en vrijblijvend. Je krijgt een duidelijk overzicht van de mogelijkheden met een richtprijs. Is er extra tekenwerk nodig, dan spreken we die prijs vooraf af.</p>
+          <ul class="checklist">
+            <li>Antwoord binnen twee werkdagen</li>
+            <li>Een schets of foto volstaat, een afgewerkt bestand geeft de scherpste prijs</li>
+            <li>Ophalen of laten leveren</li>
+          </ul>
+          <p class="muted">Liever mailen? <a href="mailto:offer@creafluxe.be">offer@creafluxe.be</a></p>
+        </div>
+
+        <form class="form form-panel" action="php/aanvraag.php" method="post" enctype="multipart/form-data" novalidate data-request-form>
+          <input type="hidden" name="kind" value="atelier">
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name">Naam</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
+            </div>
+            <div class="field">
+              <label for="f-email">E-mail</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-phone">Telefoon <span class="optional">(optioneel)</span></label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+            </div>
+            <div class="field">
+              <label for="f-technique">Wat wil je laten doen?</label>
+              <select id="f-technique" name="technique">
+                <option value="Weet ik nog niet">Weet ik nog niet</option>
+                <option value="Snijden">Snijden</option>
+                <option value="Graveren">Graveren</option>
+                <option value="Snijden en graveren">Snijden en graveren</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-material">Materiaal <span class="optional">(optioneel)</span></label>
+            <input id="f-material" name="material" type="text" list="material-options" maxlength="120" placeholder="bv. berken multiplex, acryl, leder">
+            <datalist id="material-options">
+              <option value="Hout"><option value="Multiplex"><option value="MDF"><option value="Acryl"><option value="Leder"><option value="Karton"><option value="Glas"><option value="Leisteen"><option value="Gecoat metaal">
+            </datalist>
+            <p class="hint">Geen idee? Kijk bij de <a href="materialen.html">materialen</a> of laat het open, dan adviseer ik.</p>
+          </div>
+          <div class="field">
+            <label for="f-brief">Beschrijf je idee</label>
+            <textarea id="f-brief" name="brief" rows="5" required maxlength="4000" placeholder="Wat wil je maken, voor wie, welke afmetingen ongeveer, hoeveel stuks en tegen wanneer?"></textarea>
+          </div>
+          <div class="field">
+            <label for="f-files">Ontwerp, schets of foto <span class="optional">(optioneel)</span></label>
+            <div class="dropzone">
+              <span class="dropzone-title">Sleep je bestanden hierheen of kies ze</span>
+              <input id="f-files" name="files[]" type="file" multiple data-max-files="5" accept=".jpg,.jpeg,.png,.pdf,.svg,.dxf,.dwg,.ai,.eps,image/*,application/pdf">
+              <ul class="file-list" aria-live="polite"></ul>
+            </div>
+            <p class="hint">Maximaal 5 bestanden van elk 10 MB: SVG, DXF, DWG, AI, EPS, PDF, JPG of PNG.</p>
+          </div>
+
+          <div class="field check">
+            <input id="f-delivery" name="delivery" type="checkbox" value="1">
+            <label for="f-delivery">Ik wil het laten leveren. <span class="optional">De leveringskost staat in de offerte.</span></label>
+          </div>
+          <div id="delivery-address" class="form" hidden>
+            <div class="field">
+              <label for="f-street">Straat en huisnummer</label>
+              <input id="f-street" name="street" type="text" autocomplete="street-address" maxlength="160">
+            </div>
+            <div class="field-row field-row-3">
+              <div class="field">
+                <label for="f-postcode">Postcode</label>
+                <input id="f-postcode" name="postcode" type="text" autocomplete="postal-code" maxlength="12">
+              </div>
+              <div class="field">
+                <label for="f-city">Gemeente</label>
+                <input id="f-city" name="city" type="text" autocomplete="address-level2" maxlength="80">
+              </div>
+              <div class="field">
+                <label for="f-country">Land</label>
+                <input id="f-country" name="country" type="text" autocomplete="country-name" maxlength="60" value="België">
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-delivery-notes">Opmerking bij de levering <span class="optional">(optioneel)</span></label>
+              <input id="f-delivery-notes" name="delivery_notes" type="text" maxlength="300">
+            </div>
+          </div>
+
+            <!-- Spam trap: hidden from people, bots tend to fill it in. -->
+            <div class="hp" aria-hidden="true">
+              <label>Laat dit veld leeg <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+            </div>
+            <input type="hidden" name="started" value="">
+
+          <div class="field check">
+            <input id="f-privacy" name="privacy" type="checkbox" value="1" required>
+            <label for="f-privacy">Ik ga akkoord dat Creafluxe mijn gegevens gebruikt om deze aanvraag te beantwoorden. Lees de <a href="privacy.html">privacyverklaring</a>.</label>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn" type="submit">Vraag offerte aan</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Questions -->
+    <section class="section">
+      <div class="container container-narrow">
+        <header class="section-head">
+          <p class="eyebrow">Goed om te weten</p>
+          <h2>Veelgestelde vragen</h2>
+        </header>
+        <div class="faq">
+          <details>
+            <summary>Moet ik zelf een tekening kunnen maken?</summary>
+            <p>Nee. Een schets op papier, een foto of een beschrijving is genoeg om te starten. Wil je het wel zelf proberen, dan helpt de <a href="ontwerpgids.html">ontwerpgids</a> je op weg.</p>
+          </details>
+          <details>
+            <summary>Wat kost een offerte?</summary>
+            <p>Niets. De eerste offerte met richtprijs is gratis en vrijblijvend. Vraagt je ontwerp extra uitwerking, dan spreken we die prijs af voor ik eraan begin.</p>
+          </details>
+          <details>
+            <summary>Kan ik één stuk laten maken?</summary>
+            <p>Ja. Het meeste werk in het atelier is een enkel stuk of een kleine reeks.</p>
+          </details>
+          <details>
+            <summary>Wat gebeurt er met mijn bestanden?</summary>
+            <p>Ik gebruik ze alleen om je aanvraag te beoordelen en je stuk te maken. Je ontwerp blijft van jou. Meer lees je in de <a href="privacy.html">privacyverklaring</a>.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <img src="assets/img/logo-wit.svg" alt="Creafluxe" width="180" height="80" loading="lazy">
+      <div class="footer-cols">
+        <div>
+          <p class="footer-label">Maken</p>
+          <p><a href="atelier.html">Atelier</a><br><a href="webshop.html">Webshop</a><br><a href="herinneringsdoos.html">Herinneringsdoos</a><br><a href="organizer-wand.html">Organizer-wand</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Weten</p>
+          <p><a href="materialen.html">Materialen</a><br><a href="ontwerpgids.html">Ontwerpgids</a><br><a href="privacy.html">Privacy</a></p>
+        </div>
+        <div>
+          <p class="footer-label">Contact</p>
+          <p><a href="mailto:contact@creafluxe.be">contact@creafluxe.be</a><br><a href="https://www.instagram.com/creafluxe/" rel="noopener">Instagram</a><br><a href="https://www.facebook.com/profile.php?id=61586495937170" rel="noopener">Facebook</a></p>
+          <!-- TODO: adres of regio, telefoon en ondernemingsnummer (verplicht te vermelden) -->
+        </div>
+      </div>
+      <p class="footer-small">© <span id="year">2026</span> Creafluxe · Bring your design to life</p>
+    </div>
+  </footer>
+</body>
+</html>
