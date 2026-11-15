@@ -14,7 +14,20 @@ Statische website in HTML, CSS en een beetje JavaScript, met één PHP-script vo
 | `assets/img/` | Logo's (uit `design/Logo Files`, enkel bijgesneden), favicon, foto van het Revell-project |
 | `assets/fonts/` | Manrope, lokaal gehost (geen Google Fonts, dus geen cookiebanner nodig) |
 | `php/aanvraag.php` | Verwerkt het formulier: naar de admin-app, e-mail naar jou, bevestiging naar de klant |
+| `herinneringsdoos.html` | Samensteller voor de herinneringsdoos: keuzes met live voorbeeld, verstuurt via `php/aanvraag.php` |
+| `assets/js/configurator-memory-box.js` | Logica en voorbeeld van de samensteller; maakt de configuratie (JSON) |
+| `php/memory-box.php` | Controleert die configuratie en zet ze in woorden voor de e-mails |
+| `assets/js/memory-box-3d.js` | 3D-voorbeeld van de doos (deksels openen, pootjes, vakken, gravure); valt terug op de 2D-tekening zonder WebGL |
+| `assets/vendor/three/` | three.js 0.160.0 (MIT), lokaal gehost zodat de pagina geen externe diensten laadt |
+| `materialen.html` | Materialen en stalen: filterbare kaarten met detailvenster en zoom per foto |
+| `assets/js/materialen.js` | Laadt de stalen en toont ze (filter, detailvenster, zoom, deeplink `#berken-multiplex`) |
+| `php/materialen.php` | JSON voor de Materialen-pagina: leest `GET /api/public/materials` van de admin-app, 5 minuten gecached, valt terug op de laatste kopie als de admin-app niet bereikbaar is |
+| `php/materiaal-foto.php` | Haalt een staalfoto op uit de admin-app, schaalt ze (GD) en cachet ze; zonder GD wordt het origineel doorgegeven |
 | `private/config.example.php` | Voorbeeld van de instellingen; kopieer naar `private/config.php` |
+
+## Materialen (stalen uit de admin-app)
+
+De foto's van de materialen beheer je één keer, in de admin-app (Materialen, bij *Stalen & bewerkingen*). Zet daar **Toon op de website** aan en ze verschijnen op `materialen.html`. De site bewaart zelf geen foto's. De admin-app staat standaard op `https://admin.creafluxe.be`; pas dat aan met `admin_url` in `private/config.php` of de variabele `ADMIN_URL`. Gecachte data en verkleinde foto's staan in de tijdelijke map van de server (`creafluxe-materials`).
 
 ## Online zetten
 

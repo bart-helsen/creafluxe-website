@@ -35,6 +35,13 @@
   var form = document.getElementById("request-form");
   if (!form) return;
 
+  // Arriving from the Materialen page ("?materiaal=Berken multiplex"): prefill the material field.
+  try {
+    var wanted = new URLSearchParams(window.location.search).get("materiaal");
+    var materialField = document.getElementById("f-material");
+    if (wanted && materialField && !materialField.value) materialField.value = wanted.slice(0, 120);
+  } catch (e) { /* old browser: leave the field empty */ }
+
   var started = document.getElementById("f-started");
   if (started) started.value = String(Math.floor(Date.now() / 1000));
 

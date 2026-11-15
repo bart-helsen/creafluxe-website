@@ -9,10 +9,15 @@
 //    is lost when the admin app is unreachable ("belt and braces", doc 08).
 // 4. Sends the customer a short confirmation.
 //
+// Configurator pages (herinneringsdoos.html) post here too, with "product" and
+// a "configuration" JSON; see memory-box.php.
+//
 // Answers JSON when the browser asks for it (fetch), otherwise redirects to
 // bedankt.html or back to the form, so it also works without JavaScript.
 
 declare(strict_types=1);
+
+require_once __DIR__ . '/memory-box.php';
 
 // Settings come from private/config.php (EasyHost) or, when that file is
 // absent, from environment variables (Railway test site).
@@ -93,9 +98,16 @@ $technique = field('technique', 40);
 $material  = field('material', 120);
 $brief     = field('brief', 4000);
 
+// A configurator page (herinneringsdoos.html) sends its choices as JSON.
+$configuration = null;
+if (field('product', 40) !== '') {
+    $configuration = memoryBoxConfiguration((string) ($_POST['configuration'] ?? ''));
+    if ($configuration === null) respond(false, 'Je keuzes konden niet worden gelezen. Herlaad de pagina en probeer opnieuw.', 422);
+}
+
 if ($name === '') respond(false, 'Vul je naam in.', 422);
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) respond(false, 'Vul een geldig e-mailadres in.', 422);
-if (mb_strlen($brief) < 10) respond(false, 'Beschrijf je idee in minstens een paar woorden.', 422);
+if ($configuration === null && mb_strlen($brief) < 10) respond(false, 'Beschrijf je idee in minstens een paar woorden.', 422);
 if (($_POST['privacy'] ?? '') !== '1') respond(false, 'Vink aan dat je akkoord gaat met de privacyverklaring.', 422);
 if (!in_array($technique, ['Weet ik nog niet', 'Snijden', 'Graveren', 'Snijden en graveren'], true)) {
     $technique = 'Weet ik nog niet';
@@ -128,13 +140,30 @@ if (!empty($_FILES['files']['name'][0])) {
     }
 }
 
+// The configurator only sends a file when the customer chose their own artwork.
+if ($configuration !== null) {
+    if ($configuration['options']['artwork'] !== null) {
+        if (!$files) respond(false, 'Kies het bestand met je tekening, of kies een versiering.', 422);
+        $configuration['options']['artwork'] = $files[0]['name'];
+    } elseif ($files) {
+        $files = [];
+    }
+}
+
 // --- Build the request text ----------------------------------------------------
 
 $fileList = $files ? implode(', ', array_column($files, 'name')) : 'geen';
-$designBrief = $brief
-    . "\n\nTechniek: $technique"
-    . ($material !== '' ? "\nMateriaal: $material" : '')
-    . "\nBijlagen: $fileList";
+if ($configuration !== null) {
+    // The admin app lists the choices itself; the brief only carries the remarks.
+    $designBrief = $brief !== '' ? "Opmerkingen: $brief" : '';
+    $summary = memoryBoxSummary($configuration) . ($designBrief !== '' ? "\n\n$designBrief" : '');
+} else {
+    $designBrief = $brief
+        . "\n\nTechniek: $technique"
+        . ($material !== '' ? "\nMateriaal: $material" : '')
+        . "\nBijlagen: $fileList";
+    $summary = $designBrief;
+}
 
 // --- 1. Send to the admin app --------------------------------------------------
 
@@ -150,7 +179,8 @@ if (!empty($config['intake_url']) && !empty($config['intake_key'])) {
             'phone' => $phone !== '' ? $phone : null,
             'isBusiness' => false,
         ],
-        'designBrief' => $designBrief,
+        'designBrief' => $designBrief !== '' ? $designBrief : null,
+        'configuration' => $configuration,
     ];
     $ch = curl_init($config['intake_url']);
     curl_setopt_array($ch, [
@@ -206,16 +236,26 @@ $adminLine = $intakeOk
 
 $notifyBody = "Nieuwe aanvraag via creafluxe.be\n\n"
     . "Naam: $name\nE-mail: $email\nTelefoon: " . ($phone !== '' ? $phone : '-') . "\n\n"
-    . "$designBrief\n\n$adminLine\n";
+    . "$summary\n\n$adminLine\n";
+
+// The configuration also goes along as a file for the generator, in case the
+// admin app was unreachable.
+$notifyFiles = $files;
+if ($configuration !== null) {
+    $jsonFile = tempnam(sys_get_temp_dir(), 'cfx-config-');
+    file_put_contents($jsonFile, json_encode($configuration, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n");
+    $notifyFiles[] = ['name' => 'configuratie-memory-box.json', 'path' => $jsonFile, 'mime' => 'application/json'];
+}
 
 $mailOk = sendMail(
     $config['notify_to'],
     $config['mail_from'],
-    "Nieuwe aanvraag: $name",
+    ($configuration !== null ? 'Nieuwe aanvraag herinneringsdoos: ' : 'Nieuwe aanvraag: ') . $name,
     $notifyBody,
     $email,
-    $files
+    $notifyFiles
 );
+if (isset($jsonFile)) @unlink($jsonFile);
 
 if (!$intakeOk && !$mailOk) {
     error_log('Creafluxe request lost: intake and mail both failed for ' . $email);
@@ -228,7 +268,7 @@ $firstName = explode(' ', $name)[0];
 $confirmBody = "Dag $firstName,\n\n"
     . "Bedankt voor je aanvraag bij Creafluxe. Ik heb ze goed ontvangen en bekijk ze zo snel mogelijk. "
     . "Je hoort binnen twee werkdagen van me met een voorstel en een prijs.\n\n"
-    . "Wat je me stuurde:\n\n$designBrief\n\n"
+    . "Wat je me stuurde:\n\n$summary\n\n"
     . "Wil je nog iets toevoegen? Antwoord gewoon op deze e-mail.\n\n"
     . "Tot snel,\nCreafluxe\nBring your design to life\n";
 
